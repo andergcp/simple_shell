@@ -1,23 +1,31 @@
 #include "shell.h"
 /**
+ * intial - start shell
+ */
+void initial(char **argv)
+{
+	char *ptr = NULL;
+	char **args = NULL;
+
+	do
+	{
+		printf("$ ");
+		ptr = _getptr();
+		if (!ptr)
+			continue;
+		args = _getoken(ptr);
+		_execute(args, argv);
+		free(ptr);
+		free(args);
+	} while(1);
+}
+/**
  * main - start shell, display prompt
  * Return: always 1
  *
  */
-int main(void)
+int main(int argc,char **argv, char **env)
 {
-	char *line = NULL;
-	size_t len;
-	int x = 1;
-
-	printf("$ ");
-	while (x != -1)
-	{
-		x = getline(&line, &len, stdin);
-		if (x != 1)
-			exe_command(line);
-		printf("$ ");
-	}
-	free(line);
+	initial(argv);
 	return (1);
 }

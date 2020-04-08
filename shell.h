@@ -7,27 +7,27 @@
 #include <sys/wait.h>
 #include <string.h>
 
-/*
+
 typedef struct inside_functions{
-	char * command;
+	char *command;
 	int (*command_function)();
 } inside;
-int comm_cd (char **a);
-int comm_he (char **a);
-int comm_ex (char **a);
-int comm_en (char **a);
-int comm_his (char **a);
 
-inside array_comm[] = {
-	{"cd", &comm_cd}, 
-	{"help", &comm_he}, 
-	{"exit", &comm_ex},
-	{"env", &comm_en},
-	{"history", &comm_his},
-	{NULL, NULL}
-};*/
+/* Auxiliar functions */
+int _strcmp(char *s1, char *s2);
+
+/* Built-in functions */
+int comm_cd (char **args);
+int comm_he (char **args);
+int comm_ex (char **args);
+int comm_en (char **args);
+int comm_his (char **args);
+
+/* Basic functions*/
 char *_getptr();
 char **_getoken(char *ptr);
 void _execute(char **args, char **argv);
-void exe_command(char *arg);
+/*void exe_command(char *arg);*/
+int manage_command(char **args, char **argv);
+inside *dic_command();
 #endif

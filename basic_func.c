@@ -36,10 +36,15 @@ char *_getptr(char **argv)
 	int x;
 
 	x = getline(&ptr, &i, stdin);
+	printf("%d\n", x);
 	if (x > 0)
 		return (ptr);
 	else
-		return (write(STDOUT_FILENO, "\n", 1),NULL);
+	{
+		if (isatty(0))
+			write(STDOUT_FILENO, "\n", 1);
+		return (free(ptr), NULL);
+	}
 }
 /**
  * _getoken - split line into tokens
@@ -81,73 +86,56 @@ char **_getoken(char *ptr)
 void _execute(char **args, char **argv)
 {
 	pid_t f_pid;
+	struct stat aux_stat;
 
-	f_pid = fork();
-	if (f_pid == -1)
+	if (stat(args[0], &aux_stat) == -1)
 		perror(argv[0]);
-	if (f_pid == 0)
+	else if (access(args[0], X_OK) == -1)
+		perror(argv[0]);
+	else
 	{
-		if (execve(args[0], args, NULL) == -1)
+		f_pid = fork();
+		if (f_pid == -1)
 			perror(argv[0]);
-		exit(0);
+		if (f_pid == 0)
+		{
+			if (execve(args[0], args, NULL) == -1)
+				perror(argv[0]);
+			free(args);
+			exit(2);
+		}
+		wait(NULL);
 	}
-	wait(NULL);
 }
 
-int manage_command(char **args, char **argv)
+int manage_command(char **args, char **argv, char **env)
 {
 	inside *diccio = dic_command();
 	int i;
-
-	if (diccio)
+	char *hp_arg = NULL;
+	struct stat aux_stat;
+	
+	if (stat(args[0], &aux_stat) == -1)
 	{
-		if (args[0])
+		if (diccio)
 		{
-			for (i = 0; diccio[i].command; i++)
-				if (_strcmp(diccio[i].command, args[0]) == 0)
-					return (free (diccio), diccio[i].command_function(args));
+			if (args[0])
+			{
+				for (i = 0; diccio[i].command; i++)
+					if (_strcmp(diccio[i].command, args[0]) == 0)
+						return (free (diccio), diccio[i].command_function(args));
+			}
+			else
+				return (free (diccio), -2);
 		}
 		else
-			return (free (diccio), -2);
+			return (free (diccio), -1);
+		hp_arg = handle_path(args, env);
+		if (hp_arg)
+			args[0] = hp_arg;
 	}
-	else
-		return (free (diccio), -1);
 	free (diccio);
 	_execute(args, argv);
+	free(hp_arg);
 	return (0);
 }
-
-/*
- * exe_command - execute passed command from main
- * @arg: path name
- 
-void exe_command(char *arg)
-{
-	int ansExe = 0, len = 0;
-	pid_t ansFo = 0;
-	char *ptr, *argv[2];
-
-	while (arg[len] != '\n')
-		len++;
-	ptr = malloc(len + 1);
-	if (!ptr)
-		return;
-	ansFo = fork();
-	if (ansFo == -1)
-		return;
-	if (ansFo != 0)
-		wait(NULL);
-	if (ansFo == 0)
-	{
-		while (arg[ansExe] != '\n')
-			ptr[ansExe] = arg[ansExe], ansExe++;
-		ptr[len] = '\0';
-		argv[0] = ptr, argv[1] = NULL;
-		if (access(argv[0], X_OK) != -1)
-			execve(ptr, argv, NULL);
-		perror("./shell");
-		exit(0);
-	}
-	free(ptr);
-}
-*/

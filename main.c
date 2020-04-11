@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * initialize - 
+ * initialize - initialices variables to use
  *
  *
  */

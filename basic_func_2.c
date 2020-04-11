@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
- *
- *
+ * c_buf - clear buffer
+ * @buff: buffer
  */
 void c_buf(char *buff)
 {

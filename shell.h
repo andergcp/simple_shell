@@ -28,6 +28,8 @@ char *get_path(variables *m_v);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
+void _strcpy(char *dest, char *src);
+void c_buf(char *buff);
 /* Built-in functions */
 int comm_cd (variables *m_v);
 int comm_he (variables *m_v);

@@ -52,7 +52,8 @@ char *handle_path(variables *m_v)
 			size++;
 		i++;
 	}
-
+	if (aux_path[0] == ':')
+		return (free(dup_path), free(buffer), NULL);
 	paths = malloc(sizeof(char *) * (size + 1)), size = 0;
 	if (!paths)
 		return (NULL);

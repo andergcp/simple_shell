@@ -40,7 +40,7 @@ void initial(char **argv, char **env)
 		return;
 
 	signal(SIGINT, handle);
-	signal(SIGTSTP, SIG_IGN);
+	//signal(SIGTSTP, SIG_IGN);
 	do {
 		if (isatty(0))
 			printf("$ ");

@@ -22,3 +22,21 @@ int _atoi(char *s)
 	}
 	return (sum);
 }
+/**
+ * _strcpy - Print the length string.
+ * @dest: Variable to change.
+ * @src: Variable.
+ * Return: None;
+ */
+void _strcpy(char *dest, char *src)
+{
+	char *a = dest;
+
+	while (*src != '\0')
+	{
+		*a = *src;
+		a += 1;
+		src += 1;
+	}
+	*a = '\0';
+}

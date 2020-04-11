@@ -38,10 +38,10 @@ void initial(char **argv, char **env)
 
 	if(!m_v)
 		return;
-
 	signal(SIGINT, handle);
 	//signal(SIGTSTP, SIG_IGN);
 	do {
+		m_v->prompt_n += 1;
 		if (isatty(0))
 			printf("$ ");
 		_getptr(m_v);
@@ -69,6 +69,7 @@ void initial(char **argv, char **env)
 		free(m_v->ptr);
 	} while (1);
 	free(m_v);
+	exit(m_v->status);
 }
 /**
  * main - start shell, display prompt

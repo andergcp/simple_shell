@@ -23,7 +23,7 @@ int comm_ex(variables *m_v)
 		free(m_v->args);
 		free(m_v->ptr);
 		free(m_v);
-		exit(0);
+		exit(m_v->status);
 	}
 	else if (m_v->args[1] != NULL && m_v->args[0] != NULL)
 	{

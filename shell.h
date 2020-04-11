@@ -31,6 +31,8 @@ char *_strdup(char *str);
 int _atoi(char *s);
 void _strcpy(char *dest, char *src);
 void c_buf(char *buff);
+char *itoa(int num);
+void error_msg(variables *m_v, char*msg);
 
 /* Built-in functions */
 int comm_cd (variables *m_v);

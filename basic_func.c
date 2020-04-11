@@ -91,18 +91,18 @@ void _execute(variables *m_v)
 	struct stat aux_stat;
 
 	if (stat(m_v->args[0], &aux_stat) == -1)
-		perror(m_v->argv[0]);
+		error_msg(m_v, "not found"), m_v->status = 127;
 	else if (access(m_v->args[0], X_OK) == -1)
-		perror(m_v->argv[0]);
+		error_msg(m_v, "Permission denied"), m_v->status = 126;
 	else
 	{
 		f_pid = fork();
 		if (f_pid == -1)
-			perror(m_v->argv[0]);
+			error_msg(m_v, "fork failed");
 		if (f_pid == 0)
 		{
 			if (execve(m_v->args[0], m_v->args, NULL) == -1)
-				perror(m_v->argv[0]);
+				error_msg(m_v, "execution failed");
 			free(m_v->args);
 			exit(2);
 		}

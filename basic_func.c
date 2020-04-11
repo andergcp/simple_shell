@@ -121,12 +121,8 @@ int manage_command(variables *m_v)
 	{
 		for (i = 0; diccio[i].command; i++)
 			if (_strcmp(diccio[i].command, m_v->args[0]) == 0)
-			{
-<<<<<<< HEAD
+			{				
 				free(diccio);
-=======
-				free (diccio);
->>>>>>> 87d317baecabe17d206ccd1294bfede5cd129148
 				return (diccio[i].command_function(m_v));
 			}
 	}

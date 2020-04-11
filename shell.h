@@ -28,13 +28,10 @@ char *get_path(variables *m_v);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
-<<<<<<< HEAD
 int _atoi(char *s);
-
-=======
 void _strcpy(char *dest, char *src);
 void c_buf(char *buff);
->>>>>>> 87d317baecabe17d206ccd1294bfede5cd129148
+
 /* Built-in functions */
 int comm_cd (variables *m_v);
 int comm_he (variables *m_v);

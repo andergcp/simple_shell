@@ -28,7 +28,7 @@ void reset_path (char *aux_path)
 	}
 }
 /**
- * 
+ * handle_path
  *
  *
  */

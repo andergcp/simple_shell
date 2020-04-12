@@ -70,11 +70,7 @@ void initial(char **argv, char **env)
 	} while (1);
 	i = m_v->status;
 	free(m_v);
-<<<<<<< HEAD
-	exit(i);
-=======
 	exit(m_v->status);
->>>>>>> a9e52f3455dda8c1e7cea49ec19a3ae25624d289
 }
 /**
  * main - start shell, display prompt

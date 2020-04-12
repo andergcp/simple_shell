@@ -34,11 +34,8 @@ void _strcpy(char *dest, char *src);
 void c_buf(char *buff);
 char *itoa(int num);
 void error_msg(variables *m_v, char*msg);
-<<<<<<< HEAD
 char **_strtok_line(char *ptr);
 char **_strtok_path(char *ptr);
-=======
->>>>>>> a9e52f3455dda8c1e7cea49ec19a3ae25624d289
 
 /* Built-in functions */
 int comm_cd (variables *m_v);

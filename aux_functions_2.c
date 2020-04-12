@@ -41,14 +41,9 @@ void _strcpy(char *dest, char *src)
 	*a = '\0';
 }
 /**
-<<<<<<< HEAD
  * itoa - covert integer to char
  * @num: number to convert
  * Return: string
-=======
- *
- *
->>>>>>> a9e52f3455dda8c1e7cea49ec19a3ae25624d289
  */
 char *_itoa(int num)
 {
@@ -101,10 +96,9 @@ void error_msg(variables *m_v, char *msg)
 	free(buffer);
 	free(ptr);
 }
-<<<<<<< HEAD
 
 /**
- * _strtok - split a string
+ * _strtok_line - split a string
  * @ptr: string to split
  * @delim: string of delimiters
  * Return: double pointer to ptr tokenized
@@ -139,5 +133,3 @@ char **_strtok_line(char *ptr)
 	args[j] = NULL;
 	return (args);
 }
-=======
->>>>>>> a9e52f3455dda8c1e7cea49ec19a3ae25624d289

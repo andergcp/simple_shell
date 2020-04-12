@@ -41,8 +41,9 @@ void _strcpy(char *dest, char *src)
 	*a = '\0';
 }
 /**
- *
- *
+ * itoa - covert integer to char
+ * @num: number to convert
+ * Return: string
  */
 char *_itoa(int num)
 {
@@ -94,4 +95,41 @@ void error_msg(variables *m_v, char *msg)
 	write(STDERR_FILENO, buffer, sum);
 	free(buffer);
 	free(ptr);
+}
+
+/**
+ * _strtok_line - split a string
+ * @ptr: string to split
+ * @delim: string of delimiters
+ * Return: double pointer to ptr tokenized
+ */
+char **_strtok_line(char *ptr) 
+{
+	char **args = NULL;
+	int len, i = 0, j = 0, sizeP = 0;
+
+	if (!ptr)
+		return (NULL);
+	len = _strlen(ptr);
+	while (ptr[i])
+	{
+		if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n') &&
+		    (i == 0 || ptr[i - 1] == '\t' || ptr[i - 1] == ' '))
+			sizeP++;
+		i++;
+	}
+	args = malloc(sizeof(char*) * (sizeP + 1)), i = 0;
+	if (!args)
+		return (NULL);
+	while (ptr[i])
+	{
+		if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n') &&
+		    (i == 0 || ptr[i - 1] == '\0'))
+			args[j] = (ptr + i), j++;
+	        else if (ptr[i] == ' ' || ptr[i] == '\t' || ptr[i] == '\n')
+			ptr[i] = '\0';
+		i++;
+	}
+	args[j] = NULL;
+	return (args);
 }

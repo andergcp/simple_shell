@@ -57,59 +57,64 @@ void _getptr(variables *m_v)
 void _getoken(variables *m_v)
 {
 	char *ptraux = NULL;
-	int i = 0, sizeP = 1;
+	int i = 0;
 
 	if (!(m_v->ptr[0]) == '\n')
 		return;
-	while (m_v->ptr[i])
-	{
-		if ((m_v->ptr[i] != ' ' && m_v->ptr[i] != '\t' && m_v->ptr[i] != '\n') &&
-		    (i == 0|| m_v->ptr[i - 1] == '\t' || m_v->ptr[i - 1] == ' '))
-			sizeP++;
-		i++;
-	}
-	m_v->args = malloc(sizeP * sizeof(char *)), sizeP = 0;
+	m_v->args = _strtok_line(m_v->ptr);
 	if (!(m_v->args))
 		return ;
-	ptraux = strtok(m_v->ptr, " \t\n");
-	while(ptraux)
-	{
-		m_v->args[sizeP] = ptraux;
-		ptraux = strtok(NULL, " \t\n");
-		sizeP++;
-	}
-	m_v->args[sizeP] = NULL;
 }
 /**
  * _execute - execute command
  * @args: arrays of tokens
  * @argv: arguments of main
  */
-void _execute(variables *m_v)
+void _execute(variables *m_v, char *args)
 {
 	pid_t f_pid;
 	struct stat aux_stat;
+	int status;
+	DIR *dir = NULL;
 
-	if (stat(m_v->args[0], &aux_stat) == -1)
-		error_msg(m_v, "not found"), m_v->status = 127;
-	else if (access(m_v->args[0], X_OK) == -1)
-		error_msg(m_v, "Permission denied"), m_v->status = 126;
-	else
+	if (args == NULL)
 	{
-		f_pid = fork();
-		if (f_pid == -1)
-			error_msg(m_v, "fork failed");
-		if (f_pid == 0)
+		dir = opendir(m_v->args[0]);
+		if (dir && (_strcmp(m_v->args[0], ".") != 0))
 		{
-			if (execve(m_v->args[0], m_v->args, NULL) == -1)
-				error_msg(m_v, "execution failed");
-			free(m_v->args);
-			exit(2);
+			error_msg(m_v, "Permission denied"), m_v->status = 126;
+			closedir(dir);
+			return;
 		}
-		wait(NULL);
+		else if (stat(m_v->args[0], &aux_stat) == -1)
+		{
+			error_msg(m_v, "not found"), m_v->status = 127;
+			return;
+			
+		}
+		else if (access(m_v->args[0], X_OK) == -1)
+		{
+			error_msg(m_v, "Permission denied"), m_v->status = 126;
+			return;
+		}
+		args = m_v->args[0];
 	}
+	f_pid = fork();
+	if (f_pid == -1)
+		error_msg(m_v, "fork failed");
+	if (f_pid == 0)
+	{
+		execve(args, m_v->args, NULL);
+		free(m_v->args);
+		_exit(2);
+	}
+	waitpid(f_pid, &status, WUNTRACED);
 }
-
+/**
+ * manage_command - handles the command line search
+ * @m_v: general struct
+ * Return: 0 in right return, and -1 when failed
+ */
 int manage_command(variables *m_v)
 {
 	inside *diccio = dic_command();
@@ -129,10 +134,8 @@ int manage_command(variables *m_v)
 	else
 		return (free (diccio), -1);
 	hp_arg = handle_path(m_v);
-	if (hp_arg)
-		m_v->args[0] = hp_arg;
 	free (diccio);
-	_execute(m_v);
+	_execute(m_v, hp_arg);
 	free(hp_arg);
 	return (0);
 }

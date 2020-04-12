@@ -40,31 +40,16 @@ char *handle_path(variables *m_v)
 	char *buffer = malloc(1024);
 	char **paths = NULL;
 	int i = 0, size = 1, c_buff = 0;
+	DIR *dir = NULL;
 	struct stat aux_stat;
 
 	if (!buffer)
 		return (NULL);
-
 	dup_path = _strdup(aux_path);
-	while (aux_path[i])
-	{
-		if (aux_path[i] == ':')
-			size++;
-		i++;
-	}
-	if (aux_path[0] == ':')
-		return (free(dup_path), free(buffer), NULL);
-	paths = malloc(sizeof(char *) * (size + 1)), size = 0;
+	paths = _strtok_path(dup_path);
 	if (!paths)
 		return (NULL);
-	str = strtok(dup_path, ":");
-	while (str)
-	{
-		paths[size] = str;
-		str = strtok(NULL, ":");
-		size++;
-	}
-	paths[size] = NULL, size = 0;
+	size = 0;
         // concatenate path with command and validate it
 	while (paths[size])
 	{
@@ -76,15 +61,14 @@ char *handle_path(variables *m_v)
 		while (m_v->args[0][i])
 			buffer[c_buff] = m_v->args[0][i], i++, c_buff++;
 		buffer[c_buff] = '\0';
-		if (stat(buffer, &aux_stat) != -1)
-			if (access(buffer, X_OK) == 0)
-				return (free(paths), free(dup_path), reset_path(aux_path), buffer);
+		if ((dir = opendir(buffer)) == NULL)
+			if (stat(buffer, &aux_stat) != -1)
+				if (access(buffer, X_OK) == 0)
+					return (free(paths), free(dup_path), reset_path(aux_path), buffer);
 		size++;
 		c_buf(buffer);
 	}
-	reset_path(aux_path);
-	free(dup_path);
-	free(paths);
-	free(buffer);
+	free(dup_path), size = 0;
+	free(paths), free(buffer);;
 	return (NULL);
 }

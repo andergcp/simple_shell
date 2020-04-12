@@ -77,6 +77,7 @@ void _execute(variables *m_v, char *args)
 	int status;
 	DIR *dir = NULL;
 
+<<<<<<< HEAD
 	if (args == NULL)
 	{
 		dir = opendir(m_v->args[0]);
@@ -90,6 +91,23 @@ void _execute(variables *m_v, char *args)
 		{
 			error_msg(m_v, "not found"), m_v->status = 127;
 			return;
+=======
+	if (stat(m_v->args[0], &aux_stat) == -1)
+		error_msg(m_v, "not found"), m_v->status = 127;
+	else if (access(m_v->args[0], X_OK) == -1)
+		error_msg(m_v, "Permission denied"), m_v->status = 126;
+	else
+	{
+		f_pid = fork();
+		if (f_pid == -1)
+			error_msg(m_v, "fork failed");
+		if (f_pid == 0)
+		{
+			if (execve(m_v->args[0], m_v->args, NULL) == -1)
+				error_msg(m_v, "execution failed");
+			free(m_v->args);
+			exit(2);
+>>>>>>> a9e52f3455dda8c1e7cea49ec19a3ae25624d289
 		}
 		else if (access(m_v->args[0], X_OK) == -1)
 		{

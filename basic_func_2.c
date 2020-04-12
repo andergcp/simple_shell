@@ -46,7 +46,19 @@ char *handle_path(variables *m_v)
 	if (!buffer)
 		return (NULL);
 	dup_path = _strdup(aux_path);
+<<<<<<< HEAD
 	paths = _strtok_path(dup_path);
+=======
+	while (aux_path[i])
+	{
+		if (aux_path[i] == ':')
+			size++;
+		i++;
+	}
+	if (aux_path[0] == ':')
+		return (free(dup_path), free(buffer), NULL);
+	paths = malloc(sizeof(char *) * (size + 1)), size = 0;
+>>>>>>> a9e52f3455dda8c1e7cea49ec19a3ae25624d289
 	if (!paths)
 		return (NULL);
 	size = 0;

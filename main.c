@@ -68,8 +68,9 @@ void initial(char **argv, char **env)
 		free(m_v->args);
 		free(m_v->ptr);
 	} while (1);
+	i = m_v->status;
 	free(m_v);
-	exit(m_v->status);
+	exit(i);
 }
 /**
  * main - start shell, display prompt

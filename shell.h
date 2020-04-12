@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
 typedef struct main_variables{
 	char **argv;
@@ -33,6 +34,8 @@ void _strcpy(char *dest, char *src);
 void c_buf(char *buff);
 char *itoa(int num);
 void error_msg(variables *m_v, char*msg);
+char **_strtok_line(char *ptr);
+char **_strtok_path(char *ptr);
 
 /* Built-in functions */
 int comm_cd (variables *m_v);
@@ -44,7 +47,7 @@ int comm_his (variables *m_v);
 /* Basic functions*/
 void _getptr(variables *m_v);
 void _getoken(variables *m_v);
-void _execute(variables *m_v);
+void _execute(variables *m_v, char *args);
 char *handle_path(variables *m_v);
 
 /*void exe_command(char *arg);*/

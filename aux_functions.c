@@ -6,7 +6,7 @@
  */
 int _strlen(char *s)
 {
-	int contador;
+	int contador = 0;
 
 	while (s[contador] != '\0')
 		contador++;
@@ -42,19 +42,25 @@ char *_strcat(char *dest, char *src)
  */
 int _strcmp(char *s1, char *s2)
 {
-	int resultado, i = 0;
+	int resultado, i = 0, len;
 
-	while (s1[i] != '\0' && s2[i] != '\0')
+	len = _strlen(s1);
+	if (_strlen(s2) == len)
 	{
-		resultado = s1[i] - s2[i];
-		if (resultado == 0)
+		while (s1[i] != '\0' && s2[i] != '\0')
 		{
-			i++;
-			continue;
+			resultado = s1[i] - s2[i];
+			if (resultado == 0)
+			{
+				i++;
+				continue;
+			}
+			else
+				break;
 		}
-		else
-			break;
 	}
+	else
+		resultado = 24;
 	return (resultado);
 }
 /**

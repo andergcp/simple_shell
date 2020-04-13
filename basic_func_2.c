@@ -13,20 +13,20 @@ void c_buf(char *buff)
  *
  *
  *
- */
+ 
 void reset_path (char *aux_path)
 {
 	int i = 0;	
 
-	while (1)
+	while (aux_path[i])
 	{
-		if ((*(aux_path + i) == '\0') && (*(aux_path + i + 1) != '/'))
-			break;
+		//if ((*(aux_path + i + 1) != '/') && (*(aux_path + i) == '\0'))
+		//	break;
 		if (*(aux_path + i) == '\0')
 			*(aux_path + i) = ':';
 		i++;
 	}
-}
+	}*/
 /**
  * handle_path
  *
@@ -64,7 +64,7 @@ char *handle_path(variables *m_v)
 		if ((dir = opendir(buffer)) == NULL)
 			if (stat(buffer, &aux_stat) != -1)
 				if (access(buffer, X_OK) == 0)
-					return (free(paths), free(dup_path), reset_path(aux_path), buffer);
+					return (free(paths), free(dup_path), buffer);
 		size++;
 		c_buf(buffer);
 	}

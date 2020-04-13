@@ -16,6 +16,7 @@ variables *initialize(char **argv, char **env)
 	m_v->args = NULL;
 	m_v->status = 0;
 	m_v->prompt_n = 0;
+	m_v->p_env = set_env_v(env);
 
 	return (m_v);
 }
@@ -64,13 +65,14 @@ void initial(char **argv, char **env)
 
 		i = manage_command(m_v);
 		if (i == -1)
-			write(STDOUT_FILENO, "No alloc diccio\n", 24);
+			write(STDOUT_FILENO, "No alloc diccio\n", 16);
 		free(m_v->args);
 		free(m_v->ptr);
 	} while (1);
 	i = m_v->status;
+	clear_env(m_v);
 	free(m_v);
-	exit(m_v->status);
+	exit(i);
 }
 /**
  * main - start shell, display prompt

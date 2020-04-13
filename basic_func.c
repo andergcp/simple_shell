@@ -5,13 +5,13 @@
  */
 inside *dic_command()
 {
-	inside *array_comm = malloc(sizeof(inside) * 6);
+	inside *array_comm = malloc(sizeof(inside) * 8);
 	
 	if (array_comm)
 	{
 		array_comm[0].command = "cd";
 		array_comm[0].command_function = comm_cd; 
-		array_comm[1].command = "help";
+		array_comm[1].command = "help1";
 		array_comm[1].command_function = comm_he;
 		array_comm[2].command = "exit";
 		array_comm[2].command_function = comm_ex;
@@ -19,8 +19,12 @@ inside *dic_command()
 		array_comm[3].command_function = comm_en;
 		array_comm[4].command = "history";
 		array_comm[4].command_function = comm_his;
-		array_comm[5].command = NULL;
-		array_comm[5].command_function = NULL;
+		array_comm[5].command = "unsetenv";
+		array_comm[5].command_function = comm_unset;
+		array_comm[6].command = "setenv";
+		array_comm[6].command_function = comm_set;
+		array_comm[7].command = NULL;
+		array_comm[7].command_function = NULL;
 		return (array_comm);
 	}
 	return (NULL);
@@ -127,8 +131,9 @@ int manage_command(variables *m_v)
 		for (i = 0; diccio[i].command; i++)
 			if (_strcmp(diccio[i].command, m_v->args[0]) == 0)
 			{				
+				i = diccio[i].command_function(m_v);
 				free(diccio);
-				return (diccio[i].command_function(m_v));
+				return (i);
 			}
 	}
 	else

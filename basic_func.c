@@ -108,6 +108,7 @@ void _execute(variables *m_v, char *args)
 		_exit(2);
 	}
 	waitpid(f_pid, &status, WUNTRACED);
+	m_v->status = WEXITSTATUS(status);
 }
 /**
  * manage_command - handles the command line search

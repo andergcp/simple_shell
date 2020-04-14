@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <fcntl.h>
 
 
 typedef struct env_variable{
@@ -28,6 +29,7 @@ typedef struct main_variables{
 typedef struct inside_functions{
 	char *command;
 	int (*command_function)();
+	char *help;
 } inside;
 
 /* Auxiliar functions */

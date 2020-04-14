@@ -10,21 +10,30 @@ inside *dic_command()
 	if (array_comm)
 	{
 		array_comm[0].command = "cd";
-		array_comm[0].command_function = comm_cd; 
-		array_comm[1].command = "help1";
-		array_comm[1].command_function = comm_he;
+		array_comm[0].command_function = comm_cd;
+		array_comm[0].help = "cd.txt";
+		array_comm[1].command = "help";
+		array_comm[1].command_function = comm_he; 
+		array_comm[1].help = "help.txt";
 		array_comm[2].command = "exit";
 		array_comm[2].command_function = comm_ex;
+		array_comm[2].help = "exit.txt";
 		array_comm[3].command = "env";
 		array_comm[3].command_function = comm_en;
+		array_comm[3].help = "env.txt";
 		array_comm[4].command = "history";
 		array_comm[4].command_function = comm_his;
+		array_comm[4].help = "history.txt";
 		array_comm[5].command = "unsetenv";
 		array_comm[5].command_function = comm_unset;
+    array_comm[5].help = "unsetenv.txt";
 		array_comm[6].command = "setenv";
 		array_comm[6].command_function = comm_set;
+    array_comm[6].help = "setenv.txt";
 		array_comm[7].command = NULL;
 		array_comm[7].command_function = NULL;
+    array_comm[7].help = NULL;
+
 		return (array_comm);
 	}
 	return (NULL);

@@ -53,6 +53,57 @@ int comm_cd(variables *m_v)
 }
 int comm_he(variables *m_v)
 {
+	inside *ptr = dic_command();
+	int fd, num_bytes, i = 0;
+	char *buf = malloc(1024);
+
+	if (!buf)
+		return (error_msg(m_v, "No allocate buf"), 0);
+
+	if (m_v->args[0] != NULL && m_v->args[1] == NULL)
+	{
+			
+		fd = open("builtin.txt", O_RDONLY);
+		
+		do
+		{
+			num_bytes = read(fd, buf, 1024);
+			
+			if (num_bytes == -1)
+				return (error_msg(m_v, "No file opened"), free(buf), close(fd), 0);			
+			
+			write (STDOUT_FILENO, buf, num_bytes);
+		} while (num_bytes > 0);
+
+	}
+	if (m_v->args[0] != NULL && m_v->args[1] != NULL)
+	{
+		while (ptr[i].command)
+		{
+			if (_strcmp(ptr[i].command, m_v->args[1]) == 0)
+			{
+				fd = open(ptr[i].help, O_RDONLY);
+
+                		do
+                		{
+                        		num_bytes = read(fd, buf, 1024);
+
+                        		if (num_bytes == -1)
+                                		return (error_msg(m_v, "No file opened"), free(buf), close(fd), 0);
+
+                        		write (STDOUT_FILENO, buf, num_bytes);
+                		} while (num_bytes > 0);
+
+
+			}
+			
+			i++;
+		}
+		return (error_msg(m_v, "no help topics match this string"), free(buf), close(fd), 0);
+	}
+	
+	close(fd);
+	free(buf);
 	return (0);
 }
 int comm_ex(variables *m_v)

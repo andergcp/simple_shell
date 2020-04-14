@@ -53,7 +53,6 @@ int comm_cd(variables *m_v)
 }
 int comm_he(variables *m_v)
 {
-	inside *ptr = dic_command();
 	int fd, num_bytes, i = 0;
 	char *buf = malloc(1024);
 
@@ -62,7 +61,7 @@ int comm_he(variables *m_v)
 
 	if (m_v->args[0] != NULL && m_v->args[1] == NULL)
 	{
-			
+
 		fd = open("builtin.txt", O_RDONLY);
 		
 		do
@@ -78,11 +77,11 @@ int comm_he(variables *m_v)
 	}
 	if (m_v->args[0] != NULL && m_v->args[1] != NULL)
 	{
-		while (ptr[i].command)
+		while (m_v->diccio[i].command)
 		{
-			if (_strcmp(ptr[i].command, m_v->args[1]) == 0)
+			if (_strcmp(m_v->diccio[i].command, m_v->args[1]) == 0)
 			{
-				fd = open(ptr[i].help, O_RDONLY);
+				fd = open(m_v->diccio[i].help, O_RDONLY);
 
                 		do
                 		{

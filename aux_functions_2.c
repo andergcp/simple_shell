@@ -18,8 +18,8 @@ int _atoi(char *s)
 			sum = sum * 10;
 			sum += s[i] - '0';
 		}
-		else if (sum != 0)
-				return (-1);
+		else
+			return (-1);
 		i++;
 	}
 	return (sum);

@@ -70,14 +70,13 @@ int _strcmp(char *s1, char *s2)
  */
 char *get_path(variables *m_v)
 {
-	int i;
-
-	for (i = 0; m_v->env[i]; i++)
+	env_v *en = m_v->p_env;
+	
+	while (en)
 	{
-		if (m_v->env[i][0] == 'P' && m_v->env[i][1] == 'A' &&
-		    m_v->env[i][2] == 'T' && m_v->env[i][3] == 'H')
-			return ((m_v->env[i]) + 5);
-
+		if (_strcmp(en->name, "PATH") == 0)
+			return (en->value);
+		en = en->next;
 	}
 	return (NULL);
 }

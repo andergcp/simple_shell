@@ -18,7 +18,6 @@ typedef struct env_variable{
 } env_v;
 typedef struct main_variables{
 	char **argv;
-	char **env;
 	char *ptr;
 	char **args;
 	int status;
@@ -31,26 +30,25 @@ typedef struct inside_functions{
 	int (*command_function)();
 	char *help;
 } inside;
-
 /* Auxiliar functions */
+/* Aux_fun_1 */
 int _strcmp(char *s1, char *s2);
-char *get_path(variables *m_v);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
-int _atoi(char *s);
 void _strcpy(char *dest, char *src);
+/* Aux_fun_2 */
+void clear_paths(char **paths);
+int _atoi(char *s);
 void c_buf(char *buff);
-char *itoa(int num);
-void error_msg(variables *m_v, char*msg);
-char **_strtok_line(char *ptr);
-char **_strtok_path(char *ptr);
+char *_itoa(int num);
+/*Env_fun*/
 env_v *set_env_v(char **env);
 void clear_env(variables *m_v);
 char *get_env(variables *m_v, char *name);
 void set_env(variables *m_v, char *name, char *value);
-void clear_paths(char **paths);
 /* Built-in functions */
+/* Built_fun_1 */
 int comm_cd(variables *m_v);
 int comm_he(variables *m_v);
 int comm_ex(variables *m_v);
@@ -58,14 +56,20 @@ int comm_en(variables *m_v);
 int comm_his(variables *m_v);
 int comm_unset(variables *m_v);
 int comm_set(variables *m_v);
-void print_env(variables *m_v);
-/* Basic functions*/
+/* Basic functions */
+/* Basic_fun_1 */
 void _getptr(variables *m_v);
 void _getoken(variables *m_v);
 void _execute(variables *m_v, char *args);
 char *handle_path(variables *m_v);
-
-/*void exe_command(char *arg);*/
 int manage_command(variables *m_v);
+/* Basic_fun_2 */
 inside *dic_command();
+char **_strtok_line(char *ptr);
+char **_strtok_path(char *ptr);
+char *get_path(variables *m_v);
+void error_msg(variables *m_v, char *msg);
+
+
+
 #endif

@@ -45,3 +45,8 @@ int comm_set(variables *m_v)
 	set_env(m_v, m_v->args[1], m_v->args[2]);
 	return (0);
 }
+
+int comm_echo(variables *m_v)
+{
+
+}

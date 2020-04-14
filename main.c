@@ -1,8 +1,9 @@
 #include "shell.h"
 /**
  * initialize - initialices variables to use
- *
- *
+ * @argv: Arguments received from main
+ * @env: Enviroment variables received from parent process
+ * Return: Initial values for struct variables
  */
 variables *initialize(char **argv, char **env)
 {
@@ -22,6 +23,7 @@ variables *initialize(char **argv, char **env)
 }
 /**
  * handle - handle signa interruption
+ * @m: Status Signal received
  */
 void handle(int m)
 {
@@ -37,10 +39,10 @@ void initial(char **argv, char **env)
 	variables *m_v = initialize(argv, env);
 	int i;
 
-	if(!m_v)
+	if (!m_v)
 		return;
 	signal(SIGINT, handle);
-	//signal(SIGTSTP, SIG_IGN);
+/*signal(SIGTSTP, SIG_IGN);*/
 	do {
 		m_v->prompt_n += 1;
 		if (isatty(0))

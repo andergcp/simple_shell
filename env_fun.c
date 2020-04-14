@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * set_env_v - set value of environment struct
- * @m_v: general struct
+ * @env: general Double pointer to enviroment variables
  * Return: pointer that point to first node
  */
 env_v *set_env_v(char **env)
@@ -12,7 +12,7 @@ env_v *set_env_v(char **env)
 	env_v *head = en, *prev = NULL;
 
 	en->next = NULL;
-	for(i = 0; env[i]; i++)
+	for (i = 0; env[i]; i++)
 	{
 		if (i != 0)
 		{
@@ -20,21 +20,21 @@ env_v *set_env_v(char **env)
 			en = malloc(sizeof(env_v));
 			prev->next = en;
 		}
-                //get name of variable
-	        for(j = 0; env[i][j] != '='; j++)
+/*get name of variable*/
+		for (j = 0; env[i][j] != '='; j++)
 			;
 		env[i][j] = '\0', j++;
-                //set name of variable
+/*set name of variable*/
 		ptr = malloc(j);
 		if (!ptr)
 			return (NULL);
 		_strcpy(ptr, env[i]);
 		en->name = ptr;
-		//get value of variable
+/*get value of variable*/
 		for (index = 0; env[i][j + index]; index++)
 			;
 		ptr = malloc(index + 1);
-		if(!ptr)
+		if (!ptr)
 			return (NULL);
 		_strcpy(ptr, (env[i] + j));
 		ptr[index] = '\0';
@@ -50,7 +50,7 @@ env_v *set_env_v(char **env)
 void clear_env(variables *m_v)
 {
 	env_v *en = m_v->p_env, *tmp;
-	
+
 	while (en)
 	{
 		tmp = en;
@@ -63,13 +63,14 @@ void clear_env(variables *m_v)
 
 /**
  * get_env - get environment variable value
- * @m_v: general struct
+ * @m_v: structure of variables used in the program
+ * @name: Name of required variable
  * Return: pointer to value
  */
 char *get_env(variables *m_v, char *name)
 {
 	env_v *en = m_v->p_env;
-	
+
 	while (en)
 	{
 		if (_strcmp(en->name, name) == 0)
@@ -78,7 +79,12 @@ char *get_env(variables *m_v, char *name)
 	}
 	return (NULL);
 }
-
+/**
+ * set_env - Set a value of a variable in enviroment
+ * @m_v: structure of variables used in the program
+ * @name: name of the variable to asign
+ * @value: Value to asign to the variable
+ */
 void set_env(variables *m_v, char *name, char *value)
 {
 	char *ptr = NULL;

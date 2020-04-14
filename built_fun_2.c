@@ -1,12 +1,13 @@
 #include "shell.h"
 /**
- * unsetenv - remove an environment variable
- * @m_v: general struct
+ * comm_unset - remove an environment variable
+ * @m_v: structure of variables used in the program
+ * Return: When success 0
  */
 int comm_unset(variables *m_v)
 {
 	env_v *tmp, *en = m_v->p_env;
-	
+
 	if (_strcmp(en->name, m_v->args[1]) == 0)
 	{
 		m_v->p_env = m_v->p_env->next;
@@ -33,7 +34,11 @@ int comm_unset(variables *m_v)
 	m_v->status = 0;
 	return (0);
 }
-
+/**
+ * comm_set - sets an environment variable
+ * @m_v: structure of variables used in the program
+ * Return: When success 0
+ */
 int comm_set(variables *m_v)
 {
 	char *ptr = NULL;
@@ -45,7 +50,11 @@ int comm_set(variables *m_v)
 	set_env(m_v, m_v->args[1], m_v->args[2]);
 	return (0);
 }
-
+/**
+ * comm_echo - Print arguments
+ * @m_v: structure of variables used in the program
+ * Return: When success 0
+ */
 int comm_echo(variables *m_v)
 {
 

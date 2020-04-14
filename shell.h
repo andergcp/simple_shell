@@ -10,13 +10,30 @@
 #include <dirent.h>
 #include <fcntl.h>
 
-
-typedef struct env_variable{
+/**
+ * struct env_variable - Node's struct for enviroment variables
+ * @name: name of the variable
+ * @value: Value asigned to name
+ * @next: Pointer to next node
+ */
+typedef struct env_variable
+{
 	char *name;
 	char *value;
 	struct env_variable *next;
 } env_v;
-typedef struct main_variables{
+/**
+ * struct main_variables - Set of variables used in the program
+ * @argv: Arguments received from main
+ * @ptr: stores string received from stdin
+ * @args: array of pointers to arguments
+ * @status: status of the las process
+ * @prompt_n: number of lines received from stdin
+ * @p_env: head of linked list of enviroment variables
+ * @diccio: pointer to list of built-ins values
+ */
+typedef struct main_variables
+{
 	char **argv;
 	char *ptr;
 	char **args;
@@ -25,7 +42,14 @@ typedef struct main_variables{
 	struct env_variable *p_env;
 	struct inside_functions *diccio;
 } variables;
-typedef struct inside_functions{
+/**
+ * struct inside_functions - values of built-ins
+ * @command: name of the built-ins
+ * @command_function: pointer to function
+ * @help: pointer to help files
+ */
+typedef struct inside_functions
+{
 	char *command;
 	int (*command_function)();
 	char *help;

@@ -14,7 +14,7 @@ char *_itoa(int num)
 	Fnum[len] = '\0';
 	while (len > 0)
 	{
-		Fnum[len -1] = (num % 10) + 48;
+		Fnum[len - 1] = (num % 10) + 48;
 		num /= 10;
 		len--;
 	}
@@ -27,17 +27,17 @@ char *_itoa(int num)
 void c_buf(char *buff)
 {
 	int i = 0;
-	while(buff[i])
+
+	while (buff[i])
 		buff[i] = '\0', i++;
 }
 /**
- *
- *
- *
+ * reset_path - set all buffer values to null
+ * @aux_path: pointer to string to reset to null
  */
-void reset_path (char *aux_path)
+void reset_path(char *aux_path)
 {
-	int i = 0;	
+	int i = 0;
 
 	while (aux_path[i])
 	{
@@ -48,10 +48,15 @@ void reset_path (char *aux_path)
 		i++;
 	}
 }
+/**
+ * clear_paths - free paths when its refering to working directory
+ * @paths: pointer to a pointer of strings
+ */
 void clear_paths(char **paths)
 {
 	int i;
 	char *pwd = malloc(512);
+
 	for (i = 0; paths[i]; i++)
 	{
 		if (_strcmp(paths[i], getcwd(pwd, 512)) == 0)

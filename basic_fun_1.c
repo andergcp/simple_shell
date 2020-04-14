@@ -1,8 +1,8 @@
 #include "shell.h"
 /**
- * handle_path
- *
- *
+ * handle_path - split ttokenize the path look for a command in PATH
+ * @m_v: structure of variables used in the program
+ * Return: when success pointer to the right path, otherwise NULL
  */
 char *handle_path(variables *m_v)
 {
@@ -22,7 +22,7 @@ char *handle_path(variables *m_v)
 	if (!paths)
 		return (NULL);
 	size = 0;
-        // concatenate path with command and validate it
+/* concatenate path with command and validate it */
 	while (paths[size])
 	{
 		i = 0, c_buff = 0;
@@ -33,14 +33,14 @@ char *handle_path(variables *m_v)
 		while (m_v->args[0][i])
 			buffer[c_buff] = m_v->args[0][i], i++, c_buff++;
 		buffer[c_buff] = '\0';
-		if ((dir = opendir(buffer)) == NULL)
+		dir = opendir(buffer);
+		if (dir == NULL)
 			if (stat(buffer, &aux_stat) != -1)
 				if (access(buffer, X_OK) == 0)
-					return (clear_paths(paths), free(paths), free(dup_path), /*reset_path(aux_path),*/ buffer);
+					return (clear_paths(paths), free(paths), free(dup_path), buffer);
 		size++;
 		c_buf(buffer);
 	}
-	//reset_path(aux_path);
 	free(dup_path), size = 0;
 	clear_paths(paths);
 	free(paths), free(buffer);
@@ -49,6 +49,7 @@ char *handle_path(variables *m_v)
 
 /**
  * _getptr - get new line
+ * @m_v: structure of variables used in the program
  * Return: pointer that point to new line
  */
 void _getptr(variables *m_v)
@@ -73,7 +74,7 @@ void _getptr(variables *m_v)
 }
 /**
  * _getoken - split line into tokens
- * @ptr: pointer of line
+ * @m_v: structure of variables used in the program
  * Return; array of tokens
  */
 void _getoken(variables *m_v)
@@ -85,12 +86,12 @@ void _getoken(variables *m_v)
 		return;
 	m_v->args = _strtok_line(m_v->ptr);
 	if (!(m_v->args))
-		return ;
+		return;
 }
 /**
  * _execute - execute command
  * @args: arrays of tokens
- * @argv: arguments of main
+ * @m_v: structure of variables used in the program
  */
 void _execute(variables *m_v, char *args)
 {
@@ -134,7 +135,7 @@ void _execute(variables *m_v, char *args)
 }
 /**
  * manage_command - handles the command line search
- * @m_v: general struct
+ * @m_v: structure of variables used in the program
  * Return: 0 in right return, and -1 when failed
  */
 int manage_command(variables *m_v)
@@ -142,12 +143,12 @@ int manage_command(variables *m_v)
 	int i;
 	char *hp_arg = NULL;
 	struct stat aux_stat;
-	
+
 	if (m_v->diccio)
 	{
 		for (i = 0; m_v->diccio[i].command; i++)
 			if (_strcmp(m_v->diccio[i].command, m_v->args[0]) == 0)
-			{				
+			{
 				i = m_v->diccio[i].command_function(m_v);
 				return (i);
 			}

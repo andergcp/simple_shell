@@ -6,14 +6,14 @@
 inside *dic_command()
 {
 	inside *array_comm = malloc(sizeof(inside) * 8);
-	
+
 	if (array_comm)
 	{
 		array_comm[0].command = "cd";
 		array_comm[0].command_function = comm_cd;
 		array_comm[0].help = "./help_files/cd.txt";
 		array_comm[1].command = "help";
-		array_comm[1].command_function = comm_he; 
+		array_comm[1].command_function = comm_he;
 		array_comm[1].help = "./help_files/help.txt";
 		array_comm[2].command = "exit";
 		array_comm[2].command_function = comm_ex;
@@ -74,12 +74,11 @@ void error_msg(variables *m_v, char *msg)
 	free(ptr);
 }
 /**
- * _strtok - split a string
+ * _strtok_line - split a string
  * @ptr: string to split
- * @delim: string of delimiters
  * Return: double pointer to ptr tokenized
  */
-char **_strtok_line(char *ptr) 
+char **_strtok_line(char *ptr)
 {
 	char **args = NULL, *tmp;
 	int len, i = 0, j = 0, sizeP = 0;
@@ -94,12 +93,13 @@ char **_strtok_line(char *ptr)
 			tmp = (ptr + i);
 			c_buf(tmp);
 		}
-		else if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n' && ptr[i] != ';') &&
+		else if ((ptr[i] != ' ' && ptr[i] != '\t'
+			  && ptr[i] != '\n' && ptr[i] != ';') &&
 		    (i == 0 || ptr[i - 1] == '\t' || ptr[i - 1] == ' '))
 			sizeP++;
 		i++;
 	}
-	args = malloc(sizeof(char*) * (sizeP + 1)), i = 0;
+	args = malloc(sizeof(char *) * (sizeP + 1)), i = 0;
 	if (!args)
 		return (NULL);
 	while (ptr[i])
@@ -107,7 +107,7 @@ char **_strtok_line(char *ptr)
 		if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n') &&
 		    (i == 0 || ptr[i - 1] == '\0'))
 			args[j] = (ptr + i), j++;
-	        else if (ptr[i] == ' ' || ptr[i] == '\t' || ptr[i] == '\n')
+		else if (ptr[i] == ' ' || ptr[i] == '\t' || ptr[i] == '\n')
 			ptr[i] = '\0';
 		i++;
 	}
@@ -118,13 +118,13 @@ char **_strtok_line(char *ptr)
 }
 /**
  * get_path - get path line
- * @env: environment
+ * @m_v: structure of variables used in the program
  * Return: pointer that point to path line
  */
 char *get_path(variables *m_v)
 {
 	env_v *en = m_v->p_env;
-	
+
 	while (en)
 	{
 		if (_strcmp(en->name, "PATH") == 0)
@@ -134,15 +134,15 @@ char *get_path(variables *m_v)
 	return (NULL);
 }
 /**
- * _strtok_path - 
- *
- *
+ * _strtok_path - tokenize the PATH
+ * @ptr: pointer to variable PATH
+ * Return: pointer to array of strings with values of PATH
  */
 char **_strtok_path(char *ptr)
 {
 	char **paths = NULL, *ptr1;
 	int len, i = 0, j = 0, sizeP = 1;
-	
+
 	while (ptr[i])
 	{
 		if (ptr[i] == ':')

@@ -1,36 +1,55 @@
 #include "shell.h"
 /**
- * dic_command - create a new diccionary
- * Return: pointer that point to new diccionary
+ * handle_path - split ttokenize the path look for a command in PATH
+ * @m_v: structure of variables used in the program
+ * Return: when success pointer to the right path, otherwise NULL
  */
-inside *dic_command()
+char *handle_path(variables *m_v)
 {
-	inside *array_comm = malloc(sizeof(inside) * 8);
-	
-	if (array_comm)
+	char *aux_path = get_path(m_v);
+	char *dup_path = NULL;
+	char *str = NULL;
+	char *buffer = malloc(1024);
+	char **paths = NULL;
+	int i = 0, size = 1, c_buff = 0;
+	DIR *dir = NULL;
+	struct stat aux_stat;
+
+	if (!buffer)
+		return (NULL);
+	dup_path = _strdup(aux_path);
+	paths = _strtok_path(dup_path);
+	if (!paths)
+		return (NULL);
+	size = 0;
+/* concatenate path with command and validate it */
+	while (paths[size])
 	{
-		array_comm[0].command = "cd";
-		array_comm[0].command_function = comm_cd; 
-		array_comm[1].command = "help1";
-		array_comm[1].command_function = comm_he;
-		array_comm[2].command = "exit";
-		array_comm[2].command_function = comm_ex;
-		array_comm[3].command = "env";
-		array_comm[3].command_function = comm_en;
-		array_comm[4].command = "history";
-		array_comm[4].command_function = comm_his;
-		array_comm[5].command = "unsetenv";
-		array_comm[5].command_function = comm_unset;
-		array_comm[6].command = "setenv";
-		array_comm[6].command_function = comm_set;
-		array_comm[7].command = NULL;
-		array_comm[7].command_function = NULL;
-		return (array_comm);
+		i = 0, c_buff = 0;
+		while (paths[size][i])
+			buffer[c_buff] = paths[size][i], i++, c_buff++;
+		buffer[c_buff] = '/', c_buff++;
+		i = 0;
+		while (m_v->args[0][i])
+			buffer[c_buff] = m_v->args[0][i], i++, c_buff++;
+		buffer[c_buff] = '\0';
+		dir = opendir(buffer);
+		if (dir == NULL)
+			if (stat(buffer, &aux_stat) != -1)
+				if (access(buffer, X_OK) == 0)
+					return (clear_paths(paths), free(paths), free(dup_path), buffer);
+		size++;
+		c_buf(buffer);
 	}
+	free(dup_path), size = 0;
+	clear_paths(paths);
+	free(paths), free(buffer);
 	return (NULL);
 }
+
 /**
  * _getptr - get new line
+ * @m_v: structure of variables used in the program
  * Return: pointer that point to new line
  */
 void _getptr(variables *m_v)
@@ -55,7 +74,7 @@ void _getptr(variables *m_v)
 }
 /**
  * _getoken - split line into tokens
- * @ptr: pointer of line
+ * @m_v: structure of variables used in the program
  * Return; array of tokens
  */
 void _getoken(variables *m_v)
@@ -67,12 +86,12 @@ void _getoken(variables *m_v)
 		return;
 	m_v->args = _strtok_line(m_v->ptr);
 	if (!(m_v->args))
-		return ;
+		return;
 }
 /**
  * _execute - execute command
  * @args: arrays of tokens
- * @argv: arguments of main
+ * @m_v: structure of variables used in the program
  */
 void _execute(variables *m_v, char *args)
 {
@@ -116,30 +135,27 @@ void _execute(variables *m_v, char *args)
 }
 /**
  * manage_command - handles the command line search
- * @m_v: general struct
+ * @m_v: structure of variables used in the program
  * Return: 0 in right return, and -1 when failed
  */
 int manage_command(variables *m_v)
 {
-	inside *diccio = dic_command();
 	int i;
 	char *hp_arg = NULL;
 	struct stat aux_stat;
-	
-	if (diccio)
+
+	if (m_v->diccio)
 	{
-		for (i = 0; diccio[i].command; i++)
-			if (_strcmp(diccio[i].command, m_v->args[0]) == 0)
-			{				
-				i = diccio[i].command_function(m_v);
-				free(diccio);
+		for (i = 0; m_v->diccio[i].command; i++)
+			if (_strcmp(m_v->diccio[i].command, m_v->args[0]) == 0)
+			{
+				i = m_v->diccio[i].command_function(m_v);
 				return (i);
 			}
 	}
 	else
-		return (free (diccio), -1);
+		return (-1);
 	hp_arg = handle_path(m_v);
-	free (diccio);
 	_execute(m_v, hp_arg);
 	free(hp_arg);
 	return (0);

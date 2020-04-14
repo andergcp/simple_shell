@@ -9,6 +9,8 @@ int _atoi(char *s)
 	unsigned int sum = 0;
 	int i = 0;
 
+	if (!s)
+		return (-1);
 	while (s[i] != '\0')
 	{
 		if (s[i] >= '0' && s[i] <= '9')
@@ -16,8 +18,8 @@ int _atoi(char *s)
 			sum = sum * 10;
 			sum += s[i] - '0';
 		}
-		else if (sum != 0)
-				return (-1);
+		else
+			return (-1);
 		i++;
 	}
 	return (sum);
@@ -105,7 +107,7 @@ void error_msg(variables *m_v, char *msg)
  */
 char **_strtok_line(char *ptr) 
 {
-	char **args = NULL;
+	char **args = NULL, *tmp;
 	int len, i = 0, j = 0, sizeP = 0;
 
 	if (!ptr)
@@ -113,7 +115,12 @@ char **_strtok_line(char *ptr)
 	len = _strlen(ptr);
 	while (ptr[i])
 	{
-		if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n') &&
+		if (ptr[i] == '#')
+		{
+			tmp = (ptr + i);
+			c_buf(tmp);
+		}
+		else if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n' && ptr[i] != ';') &&
 		    (i == 0 || ptr[i - 1] == '\t' || ptr[i - 1] == ' '))
 			sizeP++;
 		i++;
@@ -131,6 +138,7 @@ char **_strtok_line(char *ptr)
 		i++;
 	}
 	args[j] = NULL;
+	if (!args[0])
+		return (free(args), NULL);
 	return (args);
 }
-

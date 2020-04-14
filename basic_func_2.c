@@ -18,14 +18,25 @@ void reset_path (char *aux_path)
 {
 	int i = 0;	
 
-	while (1)
+	while (aux_path[i])
 	{
-		if ((*(aux_path + i) == '\0') && (*(aux_path + i + 1) != '/'))
+		if ((*(aux_path + i + 1) != '/') && (*(aux_path + i) == '\0'))
 			break;
 		if (*(aux_path + i) == '\0')
 			*(aux_path + i) = ':';
 		i++;
 	}
+}
+void clear_paths(char **paths)
+{
+	int i;
+	char *pwd = malloc(512);
+	for (i = 0; paths[i]; i++)
+	{
+		if (_strcmp(paths[i], getcwd(pwd, 512)) == 0)
+			free(paths[i]);
+	}
+	free(pwd);
 }
 /**
  * handle_path
@@ -64,11 +75,13 @@ char *handle_path(variables *m_v)
 		if ((dir = opendir(buffer)) == NULL)
 			if (stat(buffer, &aux_stat) != -1)
 				if (access(buffer, X_OK) == 0)
-					return (free(paths), free(dup_path), reset_path(aux_path), buffer);
+					return (clear_paths(paths), free(paths), free(dup_path), reset_path(aux_path), buffer);
 		size++;
 		c_buf(buffer);
 	}
+	reset_path(aux_path);
 	free(dup_path), size = 0;
-	free(paths), free(buffer);;
+	clear_paths(paths);
+	free(paths), free(buffer);
 	return (NULL);
 }

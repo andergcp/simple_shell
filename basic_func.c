@@ -5,7 +5,7 @@
  */
 inside *dic_command()
 {
-	inside *array_comm = malloc(sizeof(inside) * 6);
+	inside *array_comm = malloc(sizeof(inside) * 8);
 	
 	if (array_comm)
 	{
@@ -13,7 +13,7 @@ inside *dic_command()
 		array_comm[0].command_function = comm_cd;
 		array_comm[0].help = "cd.txt";
 		array_comm[1].command = "help";
-		array_comm[1].command_function = comm_he;
+		array_comm[1].command_function = comm_he; 
 		array_comm[1].help = "help.txt";
 		array_comm[2].command = "exit";
 		array_comm[2].command_function = comm_ex;
@@ -24,9 +24,16 @@ inside *dic_command()
 		array_comm[4].command = "history";
 		array_comm[4].command_function = comm_his;
 		array_comm[4].help = "history.txt";
-		array_comm[5].command = NULL;
-		array_comm[5].command_function = NULL;
-		array_comm[5].help = NULL;
+		array_comm[5].command = "unsetenv";
+		array_comm[5].command_function = comm_unset;
+    array_comm[5].help = "unsetenv.txt";
+		array_comm[6].command = "setenv";
+		array_comm[6].command_function = comm_set;
+    array_comm[6].help = "setenv.txt";
+		array_comm[7].command = NULL;
+		array_comm[7].command_function = NULL;
+    array_comm[7].help = NULL;
+
 		return (array_comm);
 	}
 	return (NULL);
@@ -114,6 +121,7 @@ void _execute(variables *m_v, char *args)
 		_exit(2);
 	}
 	waitpid(f_pid, &status, WUNTRACED);
+	m_v->status = WEXITSTATUS(status);
 }
 /**
  * manage_command - handles the command line search
@@ -122,24 +130,22 @@ void _execute(variables *m_v, char *args)
  */
 int manage_command(variables *m_v)
 {
-	inside *diccio = dic_command();
 	int i;
 	char *hp_arg = NULL;
 	struct stat aux_stat;
 	
-	if (diccio)
+	if (m_v->diccio)
 	{
-		for (i = 0; diccio[i].command; i++)
-			if (_strcmp(diccio[i].command, m_v->args[0]) == 0)
+		for (i = 0; m_v->diccio[i].command; i++)
+			if (_strcmp(m_v->diccio[i].command, m_v->args[0]) == 0)
 			{				
-				free(diccio);
-				return (diccio[i].command_function(m_v));
+				i = m_v->diccio[i].command_function(m_v);
+				return (i);
 			}
 	}
 	else
-		return (free (diccio), -1);
+		return (-1);
 	hp_arg = handle_path(m_v);
-	free (diccio);
 	_execute(m_v, hp_arg);
 	free(hp_arg);
 	return (0);

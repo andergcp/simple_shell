@@ -1,7 +1,7 @@
 #include "shell.h"
 int comm_cd(variables *m_v)
 {
-	char pwd[512];
+	char pwd[4096];
 	int len;
 
 	if (m_v->args[1] == NULL) 
@@ -13,7 +13,7 @@ int comm_cd(variables *m_v)
 			return (0);
 		}
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
-		getcwd(pwd, sizeof(pwd));
+		getcwd(pwd, 4096);
 		set_env(m_v, "PWD", pwd);
 		len = _strlen(pwd);
 		pwd[len] = '\n';
@@ -43,7 +43,7 @@ int comm_cd(variables *m_v)
 			return (0);
 		}
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
-		getcwd(pwd, sizeof(pwd));
+		getcwd(pwd, 4096);
 		set_env(m_v, "PWD", pwd);
 		len = _strlen(pwd);
 		pwd[len] = '\n';
@@ -63,8 +63,11 @@ int comm_ex(variables *m_v)
 	{
 		free(m_v->args);
 		free(m_v->ptr);
+		free(m_v->diccio);
+		clear_env(m_v);
+		i = m_v->status;
 		free(m_v);
-		exit(m_v->status);
+		exit(i);
 	}
 	else if (m_v->args[1] != NULL && m_v->args[0] != NULL)
 	{
@@ -77,6 +80,8 @@ int comm_ex(variables *m_v)
 		}
 		free(m_v->args);
                 free(m_v->ptr);
+		free(m_v->diccio);
+		clear_env(m_v);
 		free(m_v);
                 exit(i);
 	}

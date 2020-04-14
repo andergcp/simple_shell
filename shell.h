@@ -23,6 +23,7 @@ typedef struct main_variables{
 	int status;
 	int prompt_n;
 	struct env_variable *p_env;
+	struct inside_functions *diccio;
 } variables;
 typedef struct inside_functions{
 	char *command;
@@ -46,6 +47,7 @@ env_v *set_env_v(char **env);
 void clear_env(variables *m_v);
 char *get_env(variables *m_v, char *name);
 void set_env(variables *m_v, char *name, char *value);
+void clear_paths(char **paths);
 /* Built-in functions */
 int comm_cd(variables *m_v);
 int comm_he(variables *m_v);

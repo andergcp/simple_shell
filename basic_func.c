@@ -121,25 +121,22 @@ void _execute(variables *m_v, char *args)
  */
 int manage_command(variables *m_v)
 {
-	inside *diccio = dic_command();
 	int i;
 	char *hp_arg = NULL;
 	struct stat aux_stat;
 	
-	if (diccio)
+	if (m_v->diccio)
 	{
-		for (i = 0; diccio[i].command; i++)
-			if (_strcmp(diccio[i].command, m_v->args[0]) == 0)
+		for (i = 0; m_v->diccio[i].command; i++)
+			if (_strcmp(m_v->diccio[i].command, m_v->args[0]) == 0)
 			{				
-				i = diccio[i].command_function(m_v);
-				free(diccio);
+				i = m_v->diccio[i].command_function(m_v);
 				return (i);
 			}
 	}
 	else
-		return (free (diccio), -1);
+		return (-1);
 	hp_arg = handle_path(m_v);
-	free (diccio);
 	_execute(m_v, hp_arg);
 	free(hp_arg);
 	return (0);

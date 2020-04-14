@@ -1,12 +1,12 @@
 #include "shell.h"
 /**
  * _strtok_path - 
- *
+*
  *
  */
 char **_strtok_path(char *ptr)
 {
-	char **paths = NULL, *ptr1 = malloc(512);
+	char **paths = NULL, *ptr1;
 	int len, i = 0, j = 0, sizeP = 1;
 	
 	while (ptr[i])
@@ -23,8 +23,9 @@ char **_strtok_path(char *ptr)
 		if ((ptr[i] == ':') && (i == 0 || ptr[i - 1] == '\0' ||
 					ptr[i + 1] == '\0'))
 		{
+			ptr1 = malloc(512);
 			ptr[i] = '\0';
-			getcwd(ptr1, sizeof(char) * 1024);
+			getcwd(ptr1, 512);
 			paths[j] = ptr1;
 			j++;
 		}
@@ -38,7 +39,6 @@ char **_strtok_path(char *ptr)
 		i++;
 	}
 	paths[j] = NULL;
-	free(ptr1);
 	return (paths);
 }
 /**

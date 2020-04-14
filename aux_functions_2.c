@@ -18,8 +18,8 @@ int _atoi(char *s)
 			sum = sum * 10;
 			sum += s[i] - '0';
 		}
-		else if (sum != 0)
-				return (-1);
+		else
+			return (-1);
 		i++;
 	}
 	return (sum);
@@ -120,7 +120,7 @@ char **_strtok_line(char *ptr)
 			tmp = (ptr + i);
 			c_buf(tmp);
 		}
-		else if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n') &&
+		else if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n' && ptr[i] != ';') &&
 		    (i == 0 || ptr[i - 1] == '\t' || ptr[i - 1] == ' '))
 			sizeP++;
 		i++;
@@ -142,4 +142,3 @@ char **_strtok_line(char *ptr)
 		return (free(args), NULL);
 	return (args);
 }
-

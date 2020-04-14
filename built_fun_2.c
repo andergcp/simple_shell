@@ -41,12 +41,8 @@ int comm_unset(variables *m_v)
  */
 int comm_set(variables *m_v)
 {
-	char *ptr = NULL;
-	env_v *tmp = NULL, *en = m_v->p_env;
-	int len;
-
 	if (!(m_v->args[2]) || !(m_v->args[1]))
-		return (printf("Hola mundo\n"), 0);
+		return (error_msg(m_v, "No argument"), 0);
 	set_env(m_v, m_v->args[1], m_v->args[2]);
 	return (0);
 }
@@ -55,7 +51,7 @@ int comm_set(variables *m_v)
  * @m_v: structure of variables used in the program
  * Return: When success 0
  */
-int comm_echo(variables *m_v)
+int comm_echo(__attribute__((unused)) variables *m_v)
 {
-
+	return (0);
 }

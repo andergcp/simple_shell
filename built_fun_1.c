@@ -24,8 +24,6 @@ int comm_cd(variables *m_v)
 	else if (_strcmp(m_v->args[1], "-") == 0)
 	{
 		_strcpy(pwd, get_env(m_v, "OLDPWD"));
-		if (!pwd)
-			return (error_msg(m_v, "theres no OLDPWD"), 0);
 		if (chdir(get_env(m_v, "OLDPWD")) != 0)
 			return (perror("error2"), 0);
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
@@ -126,6 +124,7 @@ int comm_ex(variables *m_v)
 		free(m_v);
 		exit(i);
 	}
+	return (0);
 }
 /**
  * comm_en - Prints environment variables
@@ -179,7 +178,7 @@ int comm_en(variables *m_v)
  * @m_v: structure of variables used in the program
  * Return: When success 0
  */
-int comm_his(variables *m_v)
+int comm_his(__attribute__((unused)) variables *m_v)
 {
 	return (0);
 }

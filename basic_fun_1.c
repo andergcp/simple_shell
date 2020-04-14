@@ -8,7 +8,6 @@ char *handle_path(variables *m_v)
 {
 	char *aux_path = get_path(m_v);
 	char *dup_path = NULL;
-	char *str = NULL;
 	char *buffer = malloc(1024);
 	char **paths = NULL;
 	int i = 0, size = 1, c_buff = 0;
@@ -79,9 +78,6 @@ void _getptr(variables *m_v)
  */
 void _getoken(variables *m_v)
 {
-	char *ptraux = NULL;
-	int i = 0;
-
 	if (!(m_v->ptr[0]) == '\n')
 		return;
 	m_v->args = _strtok_line(m_v->ptr);
@@ -142,7 +138,6 @@ int manage_command(variables *m_v)
 {
 	int i;
 	char *hp_arg = NULL;
-	struct stat aux_stat;
 
 	if (m_v->diccio)
 	{

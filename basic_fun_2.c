@@ -81,11 +81,10 @@ void error_msg(variables *m_v, char *msg)
 char **_strtok_line(char *ptr)
 {
 	char **args = NULL, *tmp;
-	int len, i = 0, j = 0, sizeP = 0;
+	int i = 0, j = 0, sizeP = 0;
 
 	if (!ptr)
 		return (NULL);
-	len = _strlen(ptr);
 	while (ptr[i])
 	{
 		if (ptr[i] == '#')
@@ -141,7 +140,7 @@ char *get_path(variables *m_v)
 char **_strtok_path(char *ptr)
 {
 	char **paths = NULL, *ptr1;
-	int len, i = 0, j = 0, sizeP = 1;
+	int i = 0, j = 0, sizeP = 1;
 
 	while (ptr[i])
 	{

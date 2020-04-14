@@ -25,7 +25,7 @@ variables *initialize(char **argv, char **env)
  * handle - handle signa interruption
  * @m: Status Signal received
  */
-void handle(int m)
+void handle(__attribute__((unused)) int m)
 {
 	write(STDOUT_FILENO, "\n$ ", 3);
 }
@@ -83,7 +83,7 @@ void initial(char **argv, char **env)
  * @argv: arguments
  * @env: environment varibles
  */
-int main(int argc, char **argv, char **env)
+int main(__attribute__((unused)) int argc, char **argv, char **env)
 {
 	initial(argv, env);
 	return (1);

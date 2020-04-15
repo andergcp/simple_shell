@@ -79,7 +79,6 @@ int comm_cd(variables *m_v);
 int comm_he(variables *m_v);
 int comm_ex(variables *m_v);
 int comm_en(variables *m_v);
-int comm_his(variables *m_v);
 int comm_unset(variables *m_v);
 int comm_set(variables *m_v);
 /* Basic functions */

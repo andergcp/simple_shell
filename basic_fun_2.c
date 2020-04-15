@@ -21,9 +21,6 @@ inside *dic_command()
 		array_comm[3].command = "env";
 		array_comm[3].command_function = comm_en;
 		array_comm[3].help = "./help_files/env.txt";
-		array_comm[4].command = "history";
-		array_comm[4].command_function = comm_his;
-		array_comm[4].help = "./help_files/history.txt";
 		array_comm[5].command = "unsetenv";
 		array_comm[5].command_function = comm_unset;
 		array_comm[5].help = "./help_files/unsetenv.txt";

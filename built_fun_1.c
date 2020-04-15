@@ -173,12 +173,3 @@ int comm_en(variables *m_v)
 	free(buffer);
 	return (0);
 }
-/**
- * comm_his - Display history of command sent to STDIN
- * @m_v: structure of variables used in the program
- * Return: When success 0
- */
-int comm_his(__attribute__((unused)) variables *m_v)
-{
-	return (0);
-}

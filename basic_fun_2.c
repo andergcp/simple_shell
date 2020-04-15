@@ -94,21 +94,19 @@ char **_strtok_line(char *ptr)
 		}
 		else if ((ptr[i] != ' ' && ptr[i] != '\t'
 			  && ptr[i] != '\n' && ptr[i] != ';') &&
-		    (i == 0 || ptr[i - 1] == '\t' || ptr[i - 1] == ' '))
+			 (i == 0 || ptr[i - 1] == '\t' || ptr[i - 1] == ' '))
 			sizeP++;
 		i++;
 	}
 	args = malloc(sizeof(char *) * (sizeP + 1)), i = 0;
 	if (!args)
 		return (NULL);
-	while (ptr[i])
+	tmp = strtok(ptr, " \t\n");
+	while (tmp)
 	{
-		if ((ptr[i] != ' ' && ptr[i] != '\t' && ptr[i] != '\n') &&
-		    (i == 0 || ptr[i - 1] == '\0'))
-			args[j] = (ptr + i), j++;
-		else if (ptr[i] == ' ' || ptr[i] == '\t' || ptr[i] == '\n')
-			ptr[i] = '\0';
-		i++;
+		args[j] = tmp;
+		tmp = strtok(NULL, " \t\n");
+		j++;
 	}
 	args[j] = NULL;
 	if (!args[0])
@@ -139,8 +137,8 @@ char *get_path(variables *m_v)
  */
 char **_strtok_path(char *ptr)
 {
-	char **paths = NULL, *ptr1;
-	int i = 0, j = 0, sizeP = 1;
+	char **paths = NULL, *token;
+	int i = 0, sizeP = 1;
 
 	while (ptr[i])
 	{
@@ -148,29 +146,16 @@ char **_strtok_path(char *ptr)
 			sizeP++;
 		i++;
 	}
-	paths = malloc(sizeof(char *) * (sizeP + 1)), i = 0;
+	paths = malloc(sizeof(char *) * (sizeP + 1));
 	if (!paths)
 		return (NULL);
-	while (ptr[i])
+	token = strtok(ptr, ":");
+	for (i = 0; token; i++)
 	{
-		if ((ptr[i] == ':') && (i == 0 || ptr[i - 1] == '\0' ||
-					ptr[i + 1] == '\0'))
-		{
-			ptr1 = malloc(512);
-			ptr[i] = '\0';
-			getcwd(ptr1, 512);
-			paths[j] = ptr1;
-			j++;
-		}
-		else if ((ptr[i] != ':') && (i == 0 || ptr[i - 1] == '\0'))
-		{
-			paths[j] = (ptr + i);
-			j++;
-		}
-		else if (ptr[i] == ':')
-			ptr[i] = '\0';
-		i++;
+		paths[i] = strdup(token);
+		token = strtok(NULL, ":");
 	}
-	paths[j] = NULL;
+	paths[i] = NULL;
+	free(token);
 	return (paths);
 }

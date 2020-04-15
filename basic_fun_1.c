@@ -19,7 +19,7 @@ char *handle_path(variables *m_v)
 	dup_path = _strdup(aux_path);
 	paths = _strtok_path(dup_path);
 	if (!paths)
-		return (NULL);
+		return (free(dup_path), NULL);
 	size = 0;
 /* concatenate path with command and validate it */
 	while (paths[size])
@@ -142,11 +142,13 @@ int manage_command(variables *m_v)
 	if (m_v->diccio)
 	{
 		for (i = 0; m_v->diccio[i].command; i++)
+		{
 			if (_strcmp(m_v->diccio[i].command, m_v->args[0]) == 0)
 			{
 				i = m_v->diccio[i].command_function(m_v);
 				return (i);
 			}
+		}
 	}
 	else
 		return (-1);

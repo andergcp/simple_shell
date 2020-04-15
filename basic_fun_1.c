@@ -65,8 +65,8 @@ void _getptr(variables *m_v)
 	}
 	else
 	{
-		if (isatty(0))
-			write(STDOUT_FILENO, "\n", 1);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", 2);
 		free(ptr);
 		m_v->ptr = NULL;
 	}

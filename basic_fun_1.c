@@ -78,7 +78,7 @@ void _getptr(variables *m_v)
  */
 void _getoken(variables *m_v)
 {
-	if (!(m_v->ptr[0]))
+	if ((m_v->ptr[0]) == '\n')
 		return;
 	m_v->args = _strtok_line(m_v->ptr);
 	if (!(m_v->args))

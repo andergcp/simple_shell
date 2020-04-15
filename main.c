@@ -86,5 +86,5 @@ void initial(char **argv)
 int main(__attribute__((unused)) int argc, char **argv)
 {
 	initial(argv);
-	return (1);
+	return (0);
 }

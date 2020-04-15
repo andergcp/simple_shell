@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 
+extern char **environ;
 /**
  * struct env_variable - Node's struct for enviroment variables
  * @name: name of the variable

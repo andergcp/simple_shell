@@ -2,22 +2,21 @@
 /**
  * initialize - initialices variables to use
  * @argv: Arguments received from main
- * @env: Enviroment variables received from parent process
  * Return: Initial values for struct variables
  */
-variables *initialize(char **argv, char **env)
+variables *initialize(char **argv)
 {
 	variables *m_v = malloc(sizeof(variables));
 
 	if (!m_v)
 		return (NULL);
 	m_v->argv = argv;
-	m_v->env = env;
+	m_v->env = environ;
 	m_v->ptr = NULL;
 	m_v->args = NULL;
 	m_v->status = 0;
 	m_v->prompt_n = 0;
-	m_v->p_env = set_env_v(env);
+	m_v->p_env = set_env_v(environ);
 	m_v->diccio = dic_command();
 
 	return (m_v);
@@ -35,9 +34,9 @@ void handle(__attribute__((unused)) int m)
  * @argv: Name of executable
  * @env: variables of environment
  */
-void initial(char **argv, char **env)
+void initial(char **argv)
 {
-	variables *m_v = initialize(argv, env);
+	variables *m_v = initialize(argv);
 	int i;
 
 	if (!m_v)
@@ -84,8 +83,8 @@ void initial(char **argv, char **env)
  * @argv: arguments
  * @env: environment varibles
  */
-int main(__attribute__((unused)) int argc, char **argv, char **env)
+int main(__attribute__((unused)) int argc, char **argv)
 {
-	initial(argv, env);
+	initial(argv);
 	return (1);
 }

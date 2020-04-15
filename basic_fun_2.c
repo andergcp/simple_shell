@@ -5,7 +5,7 @@
  */
 inside *dic_command()
 {
-	inside *array_comm = malloc(sizeof(inside) * 8);
+	inside *array_comm = malloc(sizeof(inside) * 7);
 
 	if (array_comm)
 	{
@@ -21,15 +21,15 @@ inside *dic_command()
 		array_comm[3].command = "env";
 		array_comm[3].command_function = comm_en;
 		array_comm[3].help = "./help_files/env.txt";
-		array_comm[5].command = "unsetenv";
-		array_comm[5].command_function = comm_unset;
-		array_comm[5].help = "./help_files/unsetenv.txt";
-		array_comm[6].command = "setenv";
-		array_comm[6].command_function = comm_set;
-		array_comm[6].help = "./help_files/setenv.txt";
-		array_comm[7].command = NULL;
-		array_comm[7].command_function = NULL;
-		array_comm[7].help = NULL;
+		array_comm[4].command = "unsetenv";
+		array_comm[4].command_function = comm_unset;
+		array_comm[4].help = "./help_files/unsetenv.txt";
+		array_comm[5].command = "setenv";
+		array_comm[5].command_function = comm_set;
+		array_comm[5].help = "./help_files/setenv.txt";
+		array_comm[6].command = NULL;
+		array_comm[6].command_function = NULL;
+		array_comm[6].help = NULL;
 
 		return (array_comm);
 	}

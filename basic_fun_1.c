@@ -35,7 +35,7 @@ char *handle_path(variables *m_v)
 		dir = opendir(buffer);
 		if (dir == NULL)
 			if (stat(buffer, &aux_stat) != -1)
-				if (access(buffer, X_OK) == 0)
+				if (!access(buffer, X_OK))
 					return (clear_paths(paths), free(paths), free(dup_path), buffer);
 		size++;
 		c_buf(buffer);

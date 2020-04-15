@@ -55,14 +55,9 @@ void reset_path(char *aux_path)
 void clear_paths(char **paths)
 {
 	int i;
-	char *pwd = malloc(512);
 
 	for (i = 0; paths[i]; i++)
-	{
-		if (_strcmp(paths[i], getcwd(pwd, 512)) == 0)
-			free(paths[i]);
-	}
-	free(pwd);
+		free(paths[i]);
 }
 /**
  * _atoi - Casting of a string to integer.

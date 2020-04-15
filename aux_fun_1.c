@@ -42,26 +42,15 @@ char *_strcat(char *dest, char *src)
  */
 int _strcmp(char *s1, char *s2)
 {
-	int resultado, i = 0, len;
+	int i = 0;
 
-	len = _strlen(s1);
-	if (_strlen(s2) == len)
+	while (s1[i] != '\0')
 	{
-		while (s1[i] != '\0' && s2[i] != '\0')
-		{
-			resultado = s1[i] - s2[i];
-			if (resultado == 0)
-			{
-				i++;
-				continue;
-			}
-			else
-				break;
-		}
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
 	}
-	else
-		resultado = 24;
-	return (resultado);
+	return (0);
 }
 
 /**

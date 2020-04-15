@@ -14,6 +14,8 @@ char *handle_path(variables *m_v)
 	DIR *dir = NULL;
 	struct stat aux_stat;
 
+	if (!_strcmp(m_v->args[0], "."))
+		return (free(buffer), NULL);
 	if (!buffer)
 		return (NULL);
 	dup_path = _strdup(aux_path);
@@ -36,9 +38,11 @@ char *handle_path(variables *m_v)
 		if (dir == NULL)
 			if (stat(buffer, &aux_stat) != -1)
 				if (!access(buffer, X_OK))
-					return (clear_paths(paths), free(paths), free(dup_path), buffer);
+					return (clear_paths(paths), free(paths), free(dup_path),
+						closedir(dir), buffer);
 		size++;
 		c_buf(buffer);
+		closedir(dir);
 	}
 	free(dup_path), size = 0;
 	clear_paths(paths);
@@ -96,6 +100,8 @@ void _execute(variables *m_v, char *args)
 	int status;
 	DIR *dir = NULL;
 
+	if (!_strcmp(m_v->args[0], "."))
+		return;
 	if (args == NULL)
 	{
 		dir = opendir(m_v->args[0]);
@@ -108,13 +114,16 @@ void _execute(variables *m_v, char *args)
 		else if (stat(m_v->args[0], &aux_stat) == -1)
 		{
 			error_msg(m_v, "not found"), m_v->status = 127;
+			closedir(dir);
 			return;
 		}
 		else if (access(m_v->args[0], X_OK) == -1)
 		{
 			error_msg(m_v, "Permission denied"), m_v->status = 126;
+			closedir(dir);
 			return;
 		}
+		closedir(dir);
 		args = m_v->args[0];
 	}
 	f_pid = fork();

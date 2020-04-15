@@ -46,7 +46,7 @@ void initial(char **argv, char **env)
 	do {
 		m_v->prompt_n += 1;
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 3);
+			write(STDOUT_FILENO, "$ ", 2);
 		_getptr(m_v);
 		if (!(m_v->ptr))
 		{

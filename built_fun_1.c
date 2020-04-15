@@ -60,7 +60,7 @@ int comm_he(variables *m_v)
 
 	if (m_v->args[0] != NULL && m_v->args[1] == NULL)
 	{
-		fd = open("builtin.txt", O_RDONLY);
+		fd = open("help_files/builtin.txt", O_RDONLY);
 		do {
 			num_bytes = read(fd, buf, 1024);
 			if (num_bytes == -1)

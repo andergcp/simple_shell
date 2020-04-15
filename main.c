@@ -12,6 +12,7 @@ variables *initialize(char **argv, char **env)
 	if (!m_v)
 		return (NULL);
 	m_v->argv = argv;
+	m_v->env = env;
 	m_v->ptr = NULL;
 	m_v->args = NULL;
 	m_v->status = 0;

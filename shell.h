@@ -27,6 +27,7 @@ typedef struct env_variable
  * @argv: Arguments received from main
  * @ptr: stores string received from stdin
  * @args: array of pointers to arguments
+ * @env: array of pointers to environment variables
  * @status: status of the las process
  * @prompt_n: number of lines received from stdin
  * @p_env: head of linked list of enviroment variables
@@ -35,6 +36,7 @@ typedef struct env_variable
 typedef struct main_variables
 {
 	char **argv;
+	char **env;
 	char *ptr;
 	char **args;
 	int status;

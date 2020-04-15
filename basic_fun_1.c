@@ -113,10 +113,13 @@ void _execute(variables *m_v, char *args)
 	}
 	f_pid = fork();
 	if (f_pid == -1)
-		error_msg(m_v, "fork failed");
+	{
+		m_v->status = -1;
+		error_msg(m_v, "Error spawning child process\n");
+	}
 	if (f_pid == 0)
 	{
-		execve(args, m_v->args, NULL);
+		execve(args, m_v->args, m_v->env);
 		free(m_v->args);
 		_exit(2);
 	}

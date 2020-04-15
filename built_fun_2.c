@@ -46,12 +46,3 @@ int comm_set(variables *m_v)
 	set_env(m_v, m_v->args[1], m_v->args[2]);
 	return (0);
 }
-/**
- * comm_echo - Print arguments
- * @m_v: structure of variables used in the program
- * Return: When success 0
- */
-int comm_echo(__attribute__((unused)) variables *m_v)
-{
-	return (0);
-}

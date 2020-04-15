@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 
+extern char **environ;
 /**
  * struct env_variable - Node's struct for enviroment variables
  * @name: name of the variable
@@ -27,6 +28,7 @@ typedef struct env_variable
  * @argv: Arguments received from main
  * @ptr: stores string received from stdin
  * @args: array of pointers to arguments
+ * @env: array of pointers to environment variables
  * @status: status of the las process
  * @prompt_n: number of lines received from stdin
  * @p_env: head of linked list of enviroment variables
@@ -35,6 +37,7 @@ typedef struct env_variable
 typedef struct main_variables
 {
 	char **argv;
+	char **env;
 	char *ptr;
 	char **args;
 	int status;
@@ -77,7 +80,6 @@ int comm_cd(variables *m_v);
 int comm_he(variables *m_v);
 int comm_ex(variables *m_v);
 int comm_en(variables *m_v);
-int comm_his(variables *m_v);
 int comm_unset(variables *m_v);
 int comm_set(variables *m_v);
 /* Basic functions */

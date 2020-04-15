@@ -6,22 +6,26 @@
  */
 char *handle_path(variables *m_v)
 {
-	char *aux_path = get_path(m_v);
-	char *dup_path = NULL;
-	char *buffer = malloc(1024);
-	char **paths = NULL;
-	int i = 0, size = 1, c_buff = 0;
+	char *aux_path = get_path(m_v), **paths = NULL;
+	char *dup_path = NULL, *buffer = NULL;
+	int i = 0, size = 0, c_buff = 0;
 	DIR *dir = NULL;
 	struct stat aux_stat;
 
+	if (_strcmp(m_v->args[0], ".") == 0)
+		return (NULL);
+	dir = opendir(m_v->args[0]);
+	if (dir)
+		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
+			closedir(dir), NULL);
+	closedir(dir);
+	buffer = malloc(1024);
 	if (!buffer)
 		return (NULL);
 	dup_path = _strdup(aux_path);
 	paths = _strtok_path(dup_path);
 	if (!paths)
-		return (NULL);
-	size = 0;
-/* concatenate path with command and validate it */
+		return (free(dup_path), NULL);
 	while (paths[size])
 	{
 		i = 0, c_buff = 0;
@@ -32,17 +36,15 @@ char *handle_path(variables *m_v)
 		while (m_v->args[0][i])
 			buffer[c_buff] = m_v->args[0][i], i++, c_buff++;
 		buffer[c_buff] = '\0';
-		dir = opendir(buffer);
-		if (dir == NULL)
-			if (stat(buffer, &aux_stat) != -1)
-				if (access(buffer, X_OK) == 0)
-					return (clear_paths(paths), free(paths), free(dup_path), buffer);
-		size++;
-		c_buf(buffer);
+		if (stat(buffer, &aux_stat) != -1)
+			if (!access(buffer, X_OK))
+				return (clear_paths(paths), free(paths), free(dup_path),
+					_execute(m_v, buffer), buffer);
+		size++, c_buf(buffer);
 	}
-	free(dup_path), size = 0;
-	clear_paths(paths);
+	free(dup_path), clear_paths(paths);
 	free(paths), free(buffer);
+	_execute(m_v, NULL);
 	return (NULL);
 }
 
@@ -65,8 +67,8 @@ void _getptr(variables *m_v)
 	}
 	else
 	{
-		if (isatty(0))
-			write(STDOUT_FILENO, "\n", 1);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", 2);
 		free(ptr);
 		m_v->ptr = NULL;
 	}
@@ -78,7 +80,7 @@ void _getptr(variables *m_v)
  */
 void _getoken(variables *m_v)
 {
-	if (!(m_v->ptr[0]) == '\n')
+	if ((m_v->ptr[0]) == '\n')
 		return;
 	m_v->args = _strtok_line(m_v->ptr);
 	if (!(m_v->args))
@@ -94,18 +96,10 @@ void _execute(variables *m_v, char *args)
 	pid_t f_pid;
 	struct stat aux_stat;
 	int status;
-	DIR *dir = NULL;
 
 	if (args == NULL)
 	{
-		dir = opendir(m_v->args[0]);
-		if (dir && (_strcmp(m_v->args[0], ".") != 0))
-		{
-			error_msg(m_v, "Permission denied"), m_v->status = 126;
-			closedir(dir);
-			return;
-		}
-		else if (stat(m_v->args[0], &aux_stat) == -1)
+		if (stat(m_v->args[0], &aux_stat) == -1)
 		{
 			error_msg(m_v, "not found"), m_v->status = 127;
 			return;
@@ -119,10 +113,13 @@ void _execute(variables *m_v, char *args)
 	}
 	f_pid = fork();
 	if (f_pid == -1)
-		error_msg(m_v, "fork failed");
+	{
+		m_v->status = -1;
+		error_msg(m_v, "Error spawning child process\n");
+	}
 	if (f_pid == 0)
 	{
-		execve(args, m_v->args, NULL);
+		execve(args, m_v->args, m_v->env);
 		free(m_v->args);
 		_exit(2);
 	}
@@ -142,16 +139,17 @@ int manage_command(variables *m_v)
 	if (m_v->diccio)
 	{
 		for (i = 0; m_v->diccio[i].command; i++)
+		{
 			if (_strcmp(m_v->diccio[i].command, m_v->args[0]) == 0)
 			{
 				i = m_v->diccio[i].command_function(m_v);
 				return (i);
 			}
+		}
 	}
 	else
 		return (-1);
 	hp_arg = handle_path(m_v);
-	_execute(m_v, hp_arg);
 	free(hp_arg);
 	return (0);
 }

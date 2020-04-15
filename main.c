@@ -45,7 +45,7 @@ void initial(char **argv, char **env)
 /*signal(SIGTSTP, SIG_IGN);*/
 	do {
 		m_v->prompt_n += 1;
-		if (isatty(0))
+		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		_getptr(m_v);
 		if (!(m_v->ptr))

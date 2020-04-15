@@ -35,7 +35,7 @@ char *handle_path(variables *m_v)
 		dir = opendir(buffer);
 		if (dir == NULL)
 			if (stat(buffer, &aux_stat) != -1)
-				if (access(buffer, X_OK) == 0)
+				if (!access(buffer, X_OK))
 					return (clear_paths(paths), free(paths), free(dup_path), buffer);
 		size++;
 		c_buf(buffer);
@@ -65,8 +65,8 @@ void _getptr(variables *m_v)
 	}
 	else
 	{
-		if (isatty(0))
-			write(STDOUT_FILENO, "\n", 1);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", 2);
 		free(ptr);
 		m_v->ptr = NULL;
 	}

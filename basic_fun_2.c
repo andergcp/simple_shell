@@ -111,23 +111,6 @@ char **_strtok_line(char *ptr)
 	return (args);
 }
 /**
- * get_path - get path line
- * @m_v: structure of variables used in the program
- * Return: pointer that point to path line
- */
-char *get_path(variables *m_v)
-{
-	env_v *en = m_v->p_env;
-
-	while (en)
-	{
-		if (_strcmp(en->name, "PATH") == 0)
-			return (en->value);
-		en = en->next;
-	}
-	return (NULL);
-}
-/**
  * _strtok_path - tokenize the PATH
  * @ptr: pointer to variable PATH
  * Return: pointer to array of strings with values of PATH

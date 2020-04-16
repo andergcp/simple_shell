@@ -4,48 +4,48 @@
  * @m_v: structure of variables used in the program
  * Return: when success pointer to the right path, otherwise NULL
  */
-char *handle_path(variables *m_v)
+int handle_path(variables *m_v)
 {
-	char *aux_path = get_path(m_v), **paths = NULL;
-	char *dup_path = NULL, *buffer = NULL;
+	char *aux_path = get_env(m_v, "PATH"), **paths = NULL, *dup_path, *buffer;
 	int i = 0, size = 0, c_buff = 0;
 	DIR *dir = NULL;
 	struct stat aux_stat;
 
 	if (_strcmp(m_v->args[0], ".") == 0)
-		return (NULL);
+		return (0);
 	dir = opendir(m_v->args[0]);
 	if (dir)
 		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
-			closedir(dir), NULL);
+			closedir(dir), 0);
 	closedir(dir);
-	buffer = malloc(1024);
-	if (!buffer)
-		return (NULL);
-	dup_path = _strdup(aux_path);
-	paths = _strtok_path(dup_path);
-	if (!paths)
-		return (free(dup_path), NULL);
-	while (paths[size])
+	if (aux_path)
 	{
-		i = 0, c_buff = 0;
-		while (paths[size][i])
-			buffer[c_buff] = paths[size][i], i++, c_buff++;
-		buffer[c_buff] = '/', c_buff++;
-		i = 0;
-		while (m_v->args[0][i])
-			buffer[c_buff] = m_v->args[0][i], i++, c_buff++;
-		buffer[c_buff] = '\0';
-		if (stat(buffer, &aux_stat) != -1)
-			if (!access(buffer, X_OK))
-				return (clear_paths(paths), free(paths), free(dup_path),
-					_execute(m_v, buffer), buffer);
-		size++, c_buf(buffer);
+		buffer = malloc(1024);
+		if (!buffer)
+			return (0);
+		dup_path = _strdup(aux_path), paths = _strtok_path(dup_path);
+		if (!paths)
+			free(dup_path);
+		for (size = 0; paths[size]; size++)
+		{
+			c_buff = 0;
+			for (i = 0; paths[size][i]; i++)
+				buffer[c_buff] = paths[size][i], c_buff++;
+			buffer[c_buff] = '/', c_buff++;
+			for (i = 0; m_v->args[0][i]; i++)
+				buffer[c_buff] = m_v->args[0][i], c_buff++;
+			buffer[c_buff] = '\0';
+			if (stat(buffer, &aux_stat) != -1)
+				if (!access(buffer, X_OK))
+				{
+					return (clear_paths(paths), free(paths), free(dup_path),
+						_execute(m_v, buffer), free(buffer), 0);
+				}
+			c_buf(buffer);
+		}
+		free(dup_path), clear_paths(paths), free(paths), free(buffer);
 	}
-	free(dup_path), clear_paths(paths);
-	free(paths), free(buffer);
-	_execute(m_v, NULL);
-	return (NULL);
+	return (_execute(m_v, NULL), 0);
 }
 
 /**
@@ -140,7 +140,6 @@ void _execute(variables *m_v, char *args)
 int manage_command(variables *m_v)
 {
 	int i;
-	char *hp_arg = NULL;
 
 	if (m_v->diccio)
 	{
@@ -155,7 +154,6 @@ int manage_command(variables *m_v)
 	}
 	else
 		return (-1);
-	hp_arg = handle_path(m_v);
-	free(hp_arg);
+	handle_path(m_v);
 	return (0);
 }

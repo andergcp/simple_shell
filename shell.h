@@ -88,13 +88,12 @@ int comm_set(variables *m_v);
 void _getptr(variables *m_v);
 void _getoken(variables *m_v);
 void _execute(variables *m_v, char *args);
-char *handle_path(variables *m_v);
+int handle_path(variables *m_v);
 int manage_command(variables *m_v);
 /* Basic_fun_2 */
 inside *dic_command();
 char **_strtok_line(char *ptr);
 char **_strtok_path(char *ptr);
-char *get_path(variables *m_v);
 void error_msg(variables *m_v, char *msg);
 
 

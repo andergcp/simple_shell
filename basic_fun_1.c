@@ -8,16 +8,10 @@ int handle_path(variables *m_v)
 {
 	char *aux_path = get_env(m_v, "PATH"), **paths = NULL, *dup_path, *buffer;
 	int i = 0, size = 0, c_buff = 0;
-	DIR *dir = NULL;
 	struct stat aux_stat;
 
 	if (_strcmp(m_v->args[0], ".") == 0)
 		return (0);
-	dir = opendir(m_v->args[0]);
-	if (dir)
-		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
-			closedir(dir), 0);
-	closedir(dir);
 	if (aux_path)
 	{
 		buffer = malloc(1024);
@@ -140,7 +134,17 @@ void _execute(variables *m_v, char *args)
 int manage_command(variables *m_v)
 {
 	int i;
+	DIR *dir = NULL;
 
+	dir = opendir(m_v->args[0]);
+	if (dir)
+		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
+			closedir(dir), 0);
+	closedir(dir);
+	if ((m_v->args[0][0] == '.' && m_v->args[0][1] == '/') ||
+	    (m_v->args[0][0] == '.' && m_v->args[0][1] == '.' &&
+	     m_v->args[0][2] == '/'))
+		return (_execute(m_v, NULL), 0);
 	if (m_v->diccio)
 	{
 		for (i = 0; m_v->diccio[i].command; i++)

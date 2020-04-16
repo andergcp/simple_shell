@@ -110,10 +110,9 @@ void _execute(variables *m_v, char *args)
 		m_v->status = -1;
 		error_msg(m_v, "Error spawning child process\n");
 	}
-	env = _envtoarray(m_v);
 	if (f_pid == 0)
 	{
-		execve(args, m_v->args, env);
+		execve(args, m_v->args, m_v->env);
 		free(m_v->args);
 		clear_paths(env);
 		free(env);

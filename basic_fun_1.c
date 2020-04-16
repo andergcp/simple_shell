@@ -10,8 +10,6 @@ int handle_path(variables *m_v)
 	int i = 0, size = 0, c_buff = 0;
 	struct stat aux_stat;
 
-	if (_strcmp(m_v->args[0], ".") == 0)
-		return (0);
 	if (aux_path)
 	{
 		buffer = malloc(1024);
@@ -136,6 +134,8 @@ int manage_command(variables *m_v)
 	int i;
 	DIR *dir = NULL;
 
+	if (_strcmp(m_v->args[0], ".") == 0)
+		return (0);
 	dir = opendir(m_v->args[0]);
 	if (dir)
 		return (error_msg(m_v, "Permission denied"), m_v->status = 126,

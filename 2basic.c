@@ -50,7 +50,7 @@ char **_strtok_path(char *ptr)
 	token = strtok(ptr, ":");
 	for (i = 0; token; i++)
 	{
-		paths[i] = strdup(token);
+		paths[i] = _strdup(token);
 		token = strtok(NULL, ":");
 	}
 	paths[i] = NULL;

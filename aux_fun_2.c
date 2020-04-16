@@ -32,23 +32,6 @@ void c_buf(char *buff)
 		buff[i] = '\0', i++;
 }
 /**
- * reset_path - set all buffer values to null
- * @aux_path: pointer to string to reset to null
- */
-void reset_path(char *aux_path)
-{
-	int i = 0;
-
-	while (aux_path[i])
-	{
-		if ((*(aux_path + i + 1) != '/') && (*(aux_path + i) == '\0'))
-			break;
-		if (*(aux_path + i) == '\0')
-			*(aux_path + i) = ':';
-		i++;
-	}
-}
-/**
  * clear_paths - free paths when its refering to working directory
  * @paths: pointer to a pointer of strings
  */
@@ -83,4 +66,34 @@ int _atoi(char *s)
 		i++;
 	}
 	return (sum);
+}
+/**
+ * _envtoarray - Converts linke list to double pointer
+ * @vars: General variables
+ * Return: Returns -1 if failed;
+ */
+char **_envtoarray(variables *vars)
+{
+	char **res;
+	int i;
+	env_v *tmp = vars->p_env;
+
+	for (i = 0; tmp; i++)
+		tmp = tmp->next;
+	res = malloc(sizeof(char *) * (i + 1));
+	if (!res)
+		return (NULL);
+	tmp = vars->p_env;
+	for (i = 0; tmp; i++)
+	{
+		res[i] = malloc(2048);
+		res[i][0] = '\0';
+		_strcat(res[i], tmp->name);
+		_strcat(res[i], "=");
+		_strcat(res[i], tmp->value);
+		tmp = tmp->next;
+	}
+
+	res[i] = NULL;
+	return (res);
 }

@@ -42,7 +42,7 @@ void initial(char **argv)
 	if (!m_v)
 		return;
 	signal(SIGINT, handle);
-        /*signal(SIGTSTP, SIG_IGN);*/
+        signal(SIGTSTP, SIG_IGN);
 	do {
 		m_v->prompt_n += 1;
 		if (isatty(STDIN_FILENO))

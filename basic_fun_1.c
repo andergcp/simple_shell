@@ -123,10 +123,14 @@ void _execute(variables *m_v, char *args)
 	{
 		execve(args, m_v->args, env);
 		free(m_v->args);
+		clear_paths(env);
+		free(env);
 		_exit(2);
 	}
 	waitpid(f_pid, &status, WUNTRACED);
 	m_v->status = WEXITSTATUS(status);
+	clear_paths(env);
+	free(env);
 }
 /**
  * manage_command - handles the command line search

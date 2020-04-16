@@ -32,7 +32,6 @@ void handle(__attribute__((unused)) int m)
 /**
  * initial - start shell
  * @argv: Name of executable
- * @env: variables of environment
  */
 void initial(char **argv)
 {
@@ -42,7 +41,7 @@ void initial(char **argv)
 	if (!m_v)
 		return;
 	signal(SIGINT, handle);
-        signal(SIGTSTP, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	do {
 		m_v->prompt_n += 1;
 		if (isatty(STDIN_FILENO))
@@ -81,7 +80,6 @@ void initial(char **argv)
  * Return: always 1
  * @argc: counter of arguments
  * @argv: arguments
- * @env: environment varibles
  */
 int main(__attribute__((unused)) int argc, char **argv)
 {

@@ -78,3 +78,33 @@ void clear_env(vari *m_v)
 		free(tmp);
 	}
 }
+/**
+ * _envtoarray - Converts linke list to double pointer
+ * @vars: General variables
+ * Return: Returns -1 if failed;
+ */
+char **_envtoarray(vari *vars)
+{
+	char **res;
+	int i;
+	env_v *tmp = vars->p_env;
+
+	for (i = 0; tmp; i++)
+		tmp = tmp->next;
+	res = malloc(sizeof(char *) * (i + 1));
+	if (!res)
+		return (NULL);
+	tmp = vars->p_env;
+	for (i = 0; tmp; i++)
+	{
+		res[i] = malloc(2048);
+		res[i][0] = '\0';
+		_strcat(res[i], tmp->name);
+		_strcat(res[i], "=");
+		_strcat(res[i], tmp->value);
+		tmp = tmp->next;
+	}
+
+	res[i] = NULL;
+	return (res);
+}

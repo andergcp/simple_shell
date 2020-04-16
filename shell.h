@@ -82,4 +82,5 @@ void _addnode(vari *m_v, char *name, char *value);
 char *_getnode(vari *m_v, char *name);
 void _getenv(vari *m_v);
 void c_buf(char *buff);
+char **_envtoarray(vari *vars);
 #endif

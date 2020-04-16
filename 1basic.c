@@ -52,6 +52,7 @@ void _execute(vari *m_v, char *path)
 	pid_t f_pid;
 	struct stat aux_stat;
 	int status;
+	char **env = NULL;
 
 	if (!path)
 	{
@@ -73,12 +74,15 @@ void _execute(vari *m_v, char *path)
 		m_v->status = -1;
 		error_msg(m_v, "Error spawning child process\n");
 	}
+	env = _envtoarray(m_v);
 	if (f_pid == 0)
 	{
-		execve(path, m_v->args, m_v->env);
+		execve(path, m_v->args, env);
 		free(m_v->args);
 		_exit(2);
 	}
 	waitpid(f_pid, &status, WUNTRACED);
 	m_v->status = WEXITSTATUS(status);
+	clear_paths(env);
+	free(env);
 }

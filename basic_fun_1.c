@@ -143,7 +143,7 @@ int manage_command(variables *m_v)
 	closedir(dir);
 	if ((m_v->args[0][0] == '.' && m_v->args[0][1] == '/') ||
 	    (m_v->args[0][0] == '.' && m_v->args[0][1] == '.' &&
-	     m_v->args[0][2] == '/'))
+	     m_v->args[0][2] == '/') || (m_v->args[0][0] == '/'))
 		return (_execute(m_v, NULL), 0);
 	if (m_v->diccio)
 	{

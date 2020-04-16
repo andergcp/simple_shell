@@ -110,7 +110,7 @@ There are different posible exit status, this deppende on the success of the las
 
 ```bash
  shell:~/root/simple_shell$ ./custom_name_shell
- $ ls
+ $ ls -l
  -rwxrw-r-- 1 vagrant vagrant    30 Feb 20 00:00 custom_name_shell
  $
 ```

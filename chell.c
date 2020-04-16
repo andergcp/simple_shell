@@ -17,7 +17,7 @@ vari *initialize(char **argv)
 	m_v->status = 0;
 	m_v->prompt_n = 0;
 	m_v->p_env = NULL;
-	m_v->diccio = NULL;
+	m_v->diccio = dic_command();
 
 	return (m_v);
 }

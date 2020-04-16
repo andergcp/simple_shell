@@ -55,7 +55,7 @@ typedef struct main_variables
 typedef struct inside_functions
 {
 	char *command;
-	int (*command_function)();
+	void (*command_function)();
 	char *help;
 } inside;
 /* basic functions 1*/
@@ -76,6 +76,7 @@ char *_strdup(char *s);
 char *_strcat(char *dest, char *src);
 void clear_paths(char **paths);
 void comm_en(vari *m_v);
+void comm_ex(vari *m_v);
 void clear_env(vari *m_v);
 /* environment functions */
 void _addnode(vari *m_v, char *name, char *value);
@@ -83,4 +84,6 @@ char *_getnode(vari *m_v, char *name);
 void _getenv(vari *m_v);
 void c_buf(char *buff);
 char **_envtoarray(vari *vars);
+inside *dic_command();
+
 #endif

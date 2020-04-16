@@ -88,7 +88,7 @@ void _execute(variables *m_v, char *args)
 	pid_t f_pid;
 	struct stat aux_stat;
 	int status;
-	char **env = NULL;
+	char **envi = NULL;
 
 	if (args == NULL)
 	{
@@ -104,6 +104,7 @@ void _execute(variables *m_v, char *args)
 		}
 		args = m_v->args[0];
 	}
+	envi = tr_env(m_v);
 	f_pid = fork();
 	if (f_pid == -1)
 	{
@@ -112,16 +113,16 @@ void _execute(variables *m_v, char *args)
 	}
 	if (f_pid == 0)
 	{
-		execve(args, m_v->args, m_v->env);
+		execve(args, m_v->args, envi);
 		free(m_v->args);
-		clear_paths(env);
-		free(env);
+		clear_paths(envi);
+		free(envi);
 		_exit(2);
 	}
 	waitpid(f_pid, &status, WUNTRACED);
 	m_v->status = WEXITSTATUS(status);
-	clear_paths(env);
-	free(env);
+	clear_paths(envi);
+	free(envi);
 }
 /**
  * manage_command - handles the command line search

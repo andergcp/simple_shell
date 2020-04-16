@@ -69,7 +69,7 @@ void clear_paths(char **paths);
 int _atoi(char *s);
 void c_buf(char *buff);
 char *_itoa(int num);
-char **_envtoarray(variables *vars);
+char **tr_env(variables *m_v);
 /*Env_fun*/
 env_v *set_env_v(char **env);
 void clear_env(variables *m_v);

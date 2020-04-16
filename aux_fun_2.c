@@ -72,28 +72,27 @@ int _atoi(char *s)
  * @vars: General variables
  * Return: Returns -1 if failed;
  */
-char **_envtoarray(variables *vars)
+char **tr_env(variables *m_v)
 {
-	char **res;
+	char **env;
 	int i;
-	env_v *tmp = vars->p_env;
+	env_v *tmp = m_v->p_env;
 
 	for (i = 0; tmp; i++)
 		tmp = tmp->next;
-	res = malloc(sizeof(char *) * (i + 1));
-	if (!res)
+	env = malloc(sizeof(char *) * (i + 1));
+	if (!env)
 		return (NULL);
-	tmp = vars->p_env;
+	tmp = m_v->p_env;
 	for (i = 0; tmp; i++)
 	{
-		res[i] = malloc(2048);
-		res[i][0] = '\0';
-		_strcat(res[i], tmp->name);
-		_strcat(res[i], "=");
-		_strcat(res[i], tmp->value);
+		env[i] = malloc(2048);
+		env[i][0] = '\0';
+		_strcat(env[i], tmp->name);
+		_strcat(env[i], "=");
+		_strcat(env[i], tmp->value);
 		tmp = tmp->next;
 	}
-
-	res[i] = NULL;
-	return (res);
+	env[i] = NULL;
+	return (env);
 }

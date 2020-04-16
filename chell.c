@@ -33,6 +33,7 @@ void initial(char **argv)
 
 	if (!m_v)
 		return;
+	_getenv(m_v);
 	do {
 		m_v->prompt_n += 1;
 		m_v->ptr = NULL;
@@ -58,6 +59,7 @@ void initial(char **argv)
 	} while (1);
 	i = m_v->status;
 	free(m_v->ptr);
+	clear_env(m_v);
 	free(m_v->diccio), free(m_v);
 	exit(i);
 }

@@ -61,9 +61,10 @@ typedef struct inside_functions
 /* basic functions 1*/
 /*inside *dic_command();*/
 int manage_command(vari *m_v);
-void _execute(vari *m_v);
+void _execute(vari *m_v, char *path);
 /* basic functions 2*/
 void _strtok_line(vari *m_v);
+char **_strtok_path(char *path);
 /* aux functions 1*/
 void error_msg(vari *m_v, char *msg);
 int _strlen(char *s);
@@ -71,4 +72,14 @@ void _strcpy(char *dest, char *src);
 int _atoi(char *s);
 char *_itoa(int num);
 int _strcmp(char *s1, char *s2);
+char *_strdup(char *s);
+char *_strcat(char *dest, char *src);
+void clear_paths(char **paths);
+void comm_en(vari *m_v);
+void clear_env(vari *m_v);
+/* environment functions */
+void _addnode(vari *m_v, char *name, char *value);
+char *_getnode(vari *m_v, char *name);
+void _getenv(vari *m_v);
+void c_buf(char *buff);
 #endif

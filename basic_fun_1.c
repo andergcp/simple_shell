@@ -136,15 +136,6 @@ int manage_command(variables *m_v)
 
 	if (_strcmp(m_v->args[0], ".") == 0)
 		return (0);
-	dir = opendir(m_v->args[0]);
-	if (dir)
-		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
-			closedir(dir), 0);
-	closedir(dir);
-	if ((m_v->args[0][0] == '.' && m_v->args[0][1] == '/') ||
-	    (m_v->args[0][0] == '.' && m_v->args[0][1] == '.' &&
-	     m_v->args[0][2] == '/') || (m_v->args[0][0] == '/'))
-		return (_execute(m_v, NULL), 0);
 	if (m_v->diccio)
 	{
 		for (i = 0; m_v->diccio[i].command; i++)
@@ -158,6 +149,12 @@ int manage_command(variables *m_v)
 	}
 	else
 		return (-1);
+	dir = opendir(m_v->args[0]);
+	if (dir)
+		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
+			closedir(dir), 0);
+	if ((m_v->args[0][0] == '.') || (m_v->args[0][0] == '/'))
+		return (_execute(m_v, NULL), 0);
 	handle_path(m_v);
 	return (0);
 }

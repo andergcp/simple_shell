@@ -1,1 +1,72 @@
-man
+.TH SH 1 "16 April 2020" "version 1.0"
+.DT General commands manual 1
+.SH NAME
+SH - Simple Shell
+.SH SYNOPSIS
+.PP 
+qSH [arguments] [file]
+.Op FORMAT
+.Op Fl ARGUMENT
+...
+.SH DESCRIPTION
+Simple shell is a fundamental command line user interface where you which provides all basic built-in commands. Allows to execute commands 
+.SH OPTIONS
+.B Built-int commands supported:
+.P
+.B exit
+- Exit simple shell
+.P
+.B help 
+- Display help of built-in command
+.P
+.B env
+- Display environment variables
+.P
+.B cd
+- Change directory
+.P
+.B setenv
+- Set environment variable value or create a new one
+.P
+.B unsetenv 
+- Delete environment variable
+.El
+.Pp
+.SH EXIT STATUS 
+.PP
+There are different posible exit status, this deppende on the success of the last command.
+.P
+.B 0: 
+Success exit.
+.P
+.B 2:
+ Error execute command.
+.P
+.B 126:
+ Permission denied.
+.P
+.B 127:
+ not found.
+.SH EXAMPLES
+.PP
+INTERACTIVE MODE
+.PP
+$ ls \-l --------- -rwxrw-r-- 1 vagrant vagrant    30 Feb 20 00:00 custom_name_shell
+.PP
+$ echo 123 -------- 123
+.PP
+$ pwd --------- /root/simple_shell
+.PP
+NON INTERACTIVE MODE
+.PP
+echo "ls" | ./custom_name_shell -------- custom_name_shell
+.PP 
+echo "/bin/ls" | ./custom_name_shell -------- custom_name_shell
+.PP
+echo "pwd" | ./custom_name_shell -------- /root/simple_shell
+.SH SEE ALSO
+bash(1)
+.SH REPORTING BUGS
+- When type some command then you press CTRL D this command is going to execute when press for second time CTRL D
+.SH AUTHORS
+Written by Alejandro Castiblanco, John Garcia and Anderson Castiblanco.

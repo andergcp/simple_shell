@@ -11,6 +11,8 @@ int comm_cd(variables *m_v)
 
 	if (m_v->args[1] == NULL)
 	{
+		if (!get_env(m_v, "HOME"))
+			return (0);
 		_strcpy(pwd, get_env(m_v, "HOME"));
 		if (chdir(pwd) != 0)
 			return (error_msg(m_v, "Dir no found", 2), 0);
@@ -23,6 +25,8 @@ int comm_cd(variables *m_v)
 	}
 	else if (_strcmp(m_v->args[1], "-") == 0)
 	{
+		if (!get_env(m_v, "OLDPWD"))
+			return (0);
 		_strcpy(pwd, get_env(m_v, "OLDPWD"));
 		if (chdir(get_env(m_v, "OLDPWD")) != 0)
 			return (perror("error2"), 0);

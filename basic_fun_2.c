@@ -146,12 +146,13 @@ char **_strtok_path(char *ptr)
  */
 int valid_path(char *aux_path)
 {
-	int i;
+	int i = 0;
 
 	while (aux_path[i])
 	{
 		if (aux_path[i] != ' ')
 			return (1);
+		i++;
 	}
 	return (0);
 }

@@ -3,20 +3,20 @@
 .SH NAME
 SH - Simple Shell
 .SH SYNOPSIS
-.PP 
+.PP
 qSH [arguments] [file]
 .Op FORMAT
 .Op Fl ARGUMENT
 ...
 .SH DESCRIPTION
-Simple shell is a fundamental command line user interface where you which provides all basic built-in commands. Allows to execute commands 
+Simple shell is a fundamental command line user interface where you which provides all basic built-in commands. Allows to execute commands
 .SH OPTIONS
 .B Built-int commands supported:
 .P
 .B exit
 - Exit simple shell
 .P
-.B help 
+.B help
 - Display help of built-in command
 .P
 .B env
@@ -28,15 +28,15 @@ Simple shell is a fundamental command line user interface where you which provid
 .B setenv
 - Set environment variable value or create a new one
 .P
-.B unsetenv 
+.B unsetenv
 - Delete environment variable
 .El
 .Pp
-.SH EXIT STATUS 
+.SH EXIT STATUS
 .PP
 There are different posible exit status, this deppende on the success of the last command.
 .P
-.B 0: 
+.B 0:
 Success exit.
 .P
 .B 2:
@@ -60,7 +60,7 @@ $ pwd --------- /root/simple_shell
 NON INTERACTIVE MODE
 .PP
 echo "ls" | ./custom_name_shell -------- custom_name_shell
-.PP 
+.PP
 echo "/bin/ls" | ./custom_name_shell -------- custom_name_shell
 .PP
 echo "pwd" | ./custom_name_shell -------- /root/simple_shell

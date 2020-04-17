@@ -5,14 +5,14 @@
 
 Simple shell is a fundamental command line user interface where you wich provides all basic built-in commands.
 This project is our own simple shell with basic commands that was created based on SH. Simple shell handle environment
-variables in order to improve functionality of commands such as cd. There are two built-in functions to handle those 
+variables in order to improve functionality of commands such as cd. There are two built-in functions to handle those
 environment variables (setenv, unsetenv).
 
 -----
 ## INSTALLATION
 
 1. Git clone this repository
-  
+
 ```bash
  shell:~/root/simple_shell$ git clone https://github.com/andergcp/simple_shell.git
 ```
@@ -23,7 +23,7 @@ environment variables (setenv, unsetenv).
  shell:~/root/simple_shell$ gcc *.c -o custom_name_shell
 ```
 
-3. Execute 
+3. Execute
 
 ```bash
  shell:~/root/simple_shell$ ./custom_name_shell
@@ -35,7 +35,7 @@ environment variables (setenv, unsetenv).
 ### INTERACTIVE MODE
 
 Interactive mode allows you to enter as many commands as you want.
-Also allows you to exit in two ways, press ```CTRL + D``` or 
+Also allows you to exit in two ways, press ```CTRL + D``` or
 exit built-in command. ```$ exit ```
 
 To run simple shell just execute the command below
@@ -46,13 +46,13 @@ To run simple shell just execute the command below
 
 It will display this screen that means you are inside
 ```bash
- $ 
+ $
 ```
 ```bash
 shell:~/root/simple_shell$ ./custom_name_shell
  $ echo test
  test
- $ 
+ $
 ```
 
 ### NON INTERACTIVE MODE
@@ -81,7 +81,7 @@ shell:~/root/simple_shell$ ./custom_name_shell
 
     Exits the shell with a status of N.  If N is omitted, the exit status
     is that of the last command executed.
- $  
+ $
 ```
 
 | Command | Description  |
@@ -98,7 +98,7 @@ shell:~/root/simple_shell$ ./custom_name_shell
 
 There are different posible exit status, this deppende on the success of the last command.
 
-0: Success exit.<br> 
+0: Success exit.<br>
 2: Error execute command. <br>
 126: Permission denied.<br>
 127: not found.

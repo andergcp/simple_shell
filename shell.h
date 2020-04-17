@@ -95,7 +95,7 @@ inside *dic_command();
 char **_strtok_line(char *ptr);
 char **_strtok_path(char *ptr);
 void error_msg(variables *m_v, char *msg);
-
+int valid_path(char *aux_path);
 
 
 #endif

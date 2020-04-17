@@ -139,3 +139,19 @@ char **_strtok_path(char *ptr)
 	free(token);
 	return (paths);
 }
+/**
+ * valid_path - validates if the path is ok
+ * @aux_path: pointer to PATH values
+ * Return: 1 when success, 0 when fails
+ */
+int valid_path(char *aux_path)
+{
+	int i;
+
+	while (aux_path[i])
+	{
+		if (aux_path[i] != ' ')
+			return (1);
+	}
+	return (0);
+}

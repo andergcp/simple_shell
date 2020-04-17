@@ -68,8 +68,8 @@ int _atoi(char *s)
 	return (sum);
 }
 /**
- * _envtoarray - Converts linke list to double pointer
- * @vars: General variables
+ * tr_env - Converts linke list to double pointer
+ * @m_v: General variables
  * Return: Returns -1 if failed;
  */
 char **tr_env(variables *m_v)

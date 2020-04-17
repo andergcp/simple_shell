@@ -10,7 +10,7 @@ int handle_path(variables *m_v)
 	int i = 0, size = 0, c_buff = 0;
 	struct stat aux_stat;
 
-	if (aux_path)
+	if (aux_path && valid_path(aux_path) == 1)
 	{
 		buffer = malloc(1024);
 		if (!buffer)

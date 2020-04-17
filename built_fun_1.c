@@ -84,7 +84,7 @@ int comm_he(variables *m_v)
 			i++;
 		}
 		return (free(buf),
-			error_msg(m_v, "no help topics match this string: ", 2), 0);
+			error_msg(m_v, "no help topics match this string: ", 3), 0);
 	}
 	return (free(buf), 0);
 }

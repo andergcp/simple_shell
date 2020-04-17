@@ -42,7 +42,7 @@ int comm_unset(variables *m_v)
 int comm_set(variables *m_v)
 {
 	if (!(m_v->args[2]) || !(m_v->args[1]))
-		return (error_msg(m_v, "No argument"), 0);
+		return (error_msg(m_v, "No argument", 1), 0);
 	set_env(m_v, m_v->args[1], m_v->args[2]);
 	return (0);
 }

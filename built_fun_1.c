@@ -13,13 +13,13 @@ int comm_cd(variables *m_v)
 	{
 		_strcpy(pwd, get_env(m_v, "HOME"));
 		if (chdir(pwd) != 0)
-			return (error_msg(m_v, "Dir no found"), 0);
+			return (error_msg(m_v, "Dir no found", 2), 0);
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
 		getcwd(pwd, 4096);
 		set_env(m_v, "PWD", pwd);
 		len = _strlen(pwd);
 		pwd[len] = '\n';
-		return (write(STDOUT_FILENO, pwd, len + 1), 0);
+		return (0);
 	}
 	else if (_strcmp(m_v->args[1], "-") == 0)
 	{
@@ -36,12 +36,11 @@ int comm_cd(variables *m_v)
 	{
 		if (chdir(m_v->args[1]) != 0)
 			return (_strcpy(pwd, "can't cd to "), _strcat(pwd, m_v->args[1]),
-				error_msg(m_v, pwd), 0);
+				error_msg(m_v, pwd, 1), 0);
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
 		getcwd(pwd, 4096);
 		set_env(m_v, "PWD", pwd);
 		len = _strlen(pwd), pwd[len] = '\n';
-		write(STDOUT_FILENO, pwd, len + 1);
 	}
 	return (0);
 }
@@ -56,7 +55,7 @@ int comm_he(variables *m_v)
 	char *buf = malloc(1024);
 
 	if (!buf)
-		return (error_msg(m_v, "No allocate buf"), 0);
+		return (error_msg(m_v, "No allocate buf", 1), 0);
 
 	if (m_v->args[0] != NULL && m_v->args[1] == NULL)
 	{
@@ -64,7 +63,7 @@ int comm_he(variables *m_v)
 		do {
 			num_bytes = read(fd, buf, 1024);
 			if (num_bytes == -1)
-				return (error_msg(m_v, "No file opened"), free(buf), close(fd), 0);
+				return (error_msg(m_v, "No file opened", 2), free(buf), close(fd), 0);
 			write(STDOUT_FILENO, buf, num_bytes);
 		} while (num_bytes > 0);
 	}
@@ -78,13 +77,14 @@ int comm_he(variables *m_v)
 				do {
 					num_bytes = read(fd, buf, 1024);
 					if (num_bytes == -1)
-						return (error_msg(m_v, "No file opened"), free(buf), close(fd), 0);
+						return (error_msg(m_v, "No file opened", 2), free(buf), close(fd), 0);
 					write(STDOUT_FILENO, buf, num_bytes);
 				} while (num_bytes > 0);
 			}
 			i++;
 		}
-		return (free(buf), error_msg(m_v, "no help topics match this string"), 0);
+		return (free(buf),
+			error_msg(m_v, "no help topics match this string: ", 2), 0);
 	}
 	return (free(buf), 0);
 }
@@ -113,7 +113,7 @@ int comm_ex(variables *m_v)
 		i = _atoi(m_v->args[1]);
 		if (i <= -1)
 		{
-			error_msg(m_v, "Illegal number");
+			error_msg(m_v, "Illegal number: ", 2);
 			m_v->status = 2;
 			return (-2);
 		}

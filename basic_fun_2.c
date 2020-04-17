@@ -39,8 +39,9 @@ inside *dic_command()
  * error_msg - print error message
  * @m_v: General struct
  * @msg: message to print
+ * @option: Set option of error printed
  */
-void error_msg(variables *m_v, char *msg)
+void error_msg(variables *m_v, char *msg, int option)
 {
 	char *buffer = malloc(512), *ptr = NULL;
 	int len = 0, sum = 0, a = m_v->prompt_n;
@@ -65,6 +66,12 @@ void error_msg(variables *m_v, char *msg)
 	len = _strlen(msg);
 	_strcpy((buffer + sum), msg);
 	sum += len;
+	if (option == 2)
+	{
+		len = _strlen(m_v->args[1]);
+		_strcpy((buffer + sum), m_v->args[1]);
+		sum += len;
+	}
 	buffer[sum] = '\n', sum++;
 	write(STDERR_FILENO, buffer, sum);
 	free(buffer);

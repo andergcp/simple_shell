@@ -94,12 +94,12 @@ void _execute(variables *m_v, char *args)
 	{
 		if (stat(m_v->args[0], &aux_stat) == -1)
 		{
-			error_msg(m_v, "not found"), m_v->status = 127;
+			error_msg(m_v, "not found", 1), m_v->status = 127;
 			return;
 		}
 		else if (access(m_v->args[0], X_OK) == -1)
 		{
-			error_msg(m_v, "Permission denied"), m_v->status = 126;
+			error_msg(m_v, "Permission denied", 1), m_v->status = 126;
 			return;
 		}
 		args = m_v->args[0];
@@ -109,7 +109,7 @@ void _execute(variables *m_v, char *args)
 	if (f_pid == -1)
 	{
 		m_v->status = -1;
-		error_msg(m_v, "Error spawning child process\n");
+		error_msg(m_v, "Error spawning child process\n", 1);
 	}
 	if (f_pid == 0)
 	{
@@ -151,7 +151,7 @@ int manage_command(variables *m_v)
 		return (-1);
 	dir = opendir(m_v->args[0]);
 	if (dir)
-		return (error_msg(m_v, "Permission denied"), m_v->status = 126,
+		return (error_msg(m_v, "Permission denied", 1), m_v->status = 126,
 			closedir(dir), 0);
 	if ((m_v->args[0][0] == '.') || (m_v->args[0][0] == '/'))
 		return (_execute(m_v, NULL), 0);

@@ -6,9 +6,12 @@
  */
 int comm_cd(variables *m_v)
 {
-	char pwd[4096];
+	char pwd[4096], get_pwd[4096];
 	int len;
 
+	getcwd(get_pwd, 4096);
+	if (!get_env(m_v, "PWD"))
+		set_env(m_v, "PWD", get_pwd);
 	if (m_v->args[1] == NULL)
 	{
 		if (!get_env(m_v, "HOME"))
@@ -20,8 +23,7 @@ int comm_cd(variables *m_v)
 		getcwd(pwd, 4096);
 		set_env(m_v, "PWD", pwd);
 		len = _strlen(pwd);
-		pwd[len] = '\n';
-		return (0);
+		return (pwd[len] = '\n', 0);
 	}
 	else if (_strcmp(m_v->args[1], "-") == 0)
 	{
@@ -31,9 +33,7 @@ int comm_cd(variables *m_v)
 		if (chdir(get_env(m_v, "OLDPWD")) != 0)
 			return (perror("error2"), 0);
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
-		set_env(m_v, "PWD", pwd);
-		len = _strlen(pwd);
-		pwd[len] = '\n';
+		set_env(m_v, "PWD", pwd), len = _strlen(pwd), pwd[len] = '\n';
 		write(STDOUT_FILENO, pwd, len + 1);
 	}
 	else
@@ -42,8 +42,7 @@ int comm_cd(variables *m_v)
 			return (_strcpy(pwd, "can't cd to "), _strcat(pwd, m_v->args[1]),
 				error_msg(m_v, pwd, 1), 0);
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
-		getcwd(pwd, 4096);
-		set_env(m_v, "PWD", pwd);
+		getcwd(pwd, 4096), set_env(m_v, "PWD", pwd);
 		len = _strlen(pwd), pwd[len] = '\n';
 	}
 	return (0);

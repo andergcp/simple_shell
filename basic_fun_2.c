@@ -91,7 +91,7 @@ char **_strtok_line(char *ptr)
 		return (NULL);
 	while (ptr[i])
 	{
-		if (ptr[i] == '#')
+		if (ptr[i] == '#' && (i == 0 || ptr[i + 1] == ' ' || ptr[i - 1] == ' '))
 		{
 			tmp = (ptr + i);
 			c_buf(tmp);

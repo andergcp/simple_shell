@@ -22,13 +22,13 @@ int comm_cd(variables *m_v)
 		set_env(m_v, "OLDPWD", get_env(m_v, "PWD"));
 		getcwd(pwd, 4096);
 		set_env(m_v, "PWD", pwd);
-		len = _strlen(pwd);
-		return (pwd[len] = '\n', 0);
+		return (len = _strlen(pwd), pwd[len] = '\n', 0);
 	}
 	else if (_strcmp(m_v->args[1], "-") == 0)
 	{
 		if (!get_env(m_v, "OLDPWD"))
-			return (0);
+			return (_strcpy(pwd, get_env(m_v, "PWD")), len = _strlen(pwd),
+				pwd[len] = '\n', write(STDOUT_FILENO, pwd, len + 1), 0);
 		_strcpy(pwd, get_env(m_v, "OLDPWD"));
 		if (chdir(get_env(m_v, "OLDPWD")) != 0)
 			return (perror("error2"), 0);

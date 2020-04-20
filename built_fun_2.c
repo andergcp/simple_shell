@@ -8,6 +8,8 @@ int comm_unset(variables *m_v)
 {
 	env_v *tmp, *en = m_v->p_env;
 
+	if (!(m_v->args[1]))
+		return (0);
 	if (!get_env(m_v, m_v->args[1]))
 		return (0);
 	if (_strcmp(en->name, m_v->args[1]) == 0)
@@ -43,7 +45,9 @@ int comm_unset(variables *m_v)
  */
 int comm_set(variables *m_v)
 {
-	if (!(m_v->args[2]) || !(m_v->args[1]))
+	if (!(m_v->args[1]))
+		return (0);
+	if (!(m_v->args[2]))
 		return (0);
 	set_env(m_v, m_v->args[1], m_v->args[2]);
 	return (0);

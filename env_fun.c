@@ -73,7 +73,7 @@ char *get_env(variables *m_v, char *name)
 
 	while (en)
 	{
-		if (_strcmp(en->name, name) == 0 && en->value)
+		if (_strcmp(en->name, name) == 0)
 			return (en->value);
 
 		en = en->next;

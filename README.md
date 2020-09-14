@@ -1,3 +1,6 @@
+# Simple_shell
+[![Contributors][contributors-shield]][contributors-url]
+
 <p align="center"><img src="https://www.holbertonschool.com/holberton-logo.png"></p>
 
 -----
@@ -168,6 +171,9 @@ Help_files: Directory containing help files of built-in commands.
 | env_fun | Functions to handle environment variables: <br> set_env_v() <br> clear_env() <br> set_env() <br> get_env() |
 
 ## Authors
-- John Garcia  [@jgarcia15121982](https://www.github.com/jgarcia15121982)
-- Anderson Castiblanco [@andergcp](https://www.github.com/andergcp)
-- Alejandro Castiblanco [@AlejoCasti](https://www.github.com/AlejoCasti)
+* Alejandro Castiblanco [Github](https://www.github.com/AlejoCasti) - [LinkedIn](https://www.linkedin.com/in/alejocasti/)
+* Anderson Castiblanco [Github](https://github.com/andergcp) - [LinkedIn](https://www.linkedin.com/in/andergcp)
+* John Garcia  [Github](https://www.github.com/jgarcia15121982) - [LinkedIn](https://www.linkedin.com/in/is-john-garcia/)
+
+[contributors-shield]: https://img.shields.io/github/contributors/andergcp/simple_shell?style=social&logo=appveyor
+[contributors-url]: https://github.com/andergcp/simple_shell/graphs/contributors
